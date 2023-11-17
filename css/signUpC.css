@@ -1,0 +1,108 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
+
+*{
+    font-family: 'Gowun Batang', serif;
+}
+
+body{
+    background-color: #e8e7d2;
+
+    display: flex;
+    justify-content: center;
+}
+
+#backParent{
+    width: 60%;
+    background-color: white;
+    border : 2px solid #c9ba9b;
+    border-radius: 20px;
+    padding : 40px;
+    margin-top : 60px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#findIdComment{
+    font-size : 20px;
+    font-weight: bold;
+}
+
+#myform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin : 10px;
+}
+
+#idParent{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+
+    margin-left : 28%;
+}
+
+#inputBox{
+    margin : 10px;
+    width: 300px;
+    border-radius: 5px;
+    border : 2px solid #c9ba9b;
+    height : 30px
+}
+
+#duplicateBtn{
+    padding: 7px 30px;
+    margin:10px;
+    border:none;
+    border-radius: 10px;
+
+    text-align: center;
+
+    box-shadow: 2px 2px 2px 2px gray;
+    background-color: #faf0e4;
+}
+
+
+#signUpBtn{
+    width: 30%;
+    padding: 7px 30px;
+    margin:10px;
+    border:none;
+    border-radius: 10px;
+
+    box-shadow: 2px 2px 2px 2px gray;
+    background-color: #faf0e4;
+}
+
+#rankParent{
+    display: flex;
+    flex-direction: row;
+}
+
+#radioBtn{
+    margin-top : 20px;
+}
+
+#departmentParent{
+    display : flex;
+    flex-direction : row;
+}
+
+
+#Btn{
+    padding : 7px 10px;
+    margin : 10px;
+    border:none;
+    border-radius: 10px;
+
+    text-align: center;
+
+    box-shadow: 2px 2px 2px 2px gray;
+    background-color: #faf0e4;
+
+}

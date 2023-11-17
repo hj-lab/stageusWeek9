@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="./css/indexC.css">
+</head>
+<body>
+    <div id="backParent">
+        <div id="loginComment">로그인</div>
+
+        <form name="myform" action="loginJ.jsp" id="myform">
+            <input type="text" id="inputBox" placeholder="id입력 / 4~11자">
+            <input type="text" id="inputBox" placeholder="password 입력 / 영문자, 숫자 포함 8~15자">
+            <input type="submit" id="loginBtn" value="로그인">
+        </form>
+
+        <div>
+            <input type="button" id="moreInformBtn" value="id찾기" onclick="location.href='html/findId.html'">
+            <input type="button" id="moreInformBtn" value="pw찾기" onclick="location.href='html/findPw.html'">
+            <input type="button" id="moreInformBtn" value="회원가입" onclick="location.href='html/signUp.html'">
+        </div>
+    </div>
+</body>
+</html>

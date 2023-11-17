@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type="text/css" rel="stylesheet" href="../css/signUpC.css">
+</head>
+<body>
+    <div id="backParent">
+        <div id="findIdComment">회원가입</div>
+
+        <form name="myform" action="findIdJ.jsp" id="myform">
+            <div id="idParent">
+                <input type="text" id="inputBox" placeholder="id 입력">
+                <input type="button" id="duplicateBtn" value="중복확인">
+            </div>
+            <input type="text" id="inputBox" placeholder="pw 입력">
+            <input type="text" id="inputBox" placeholder="pw 확인">
+            <input type="text" id="inputBox" placeholder="이름 입력">
+            <input type="text" id="inputBox" placeholder="전화번호 입력 / - 제외">
+
+            <div id="rankParent">
+                <div id="Btn">직급</div>
+                <div>
+                    <input type="radio" name="rank" id="radioBtn" value="팀장">팀장
+                </div>
+                <div>
+                    <input type="radio" name="rank" id="radioBtn" value="팀원">팀원
+                </div>
+            </div>
+            
+             <div id="departmentParent">
+                <div id="Btn">부서</div>
+                <div>
+                    <input type="radio" name="department" id="radioBtn" value="개발팀">개발팀
+                </div>
+                <div>
+                    <input type="radio" name="department" id="radioBtn" value="디자인팀">디자인팀
+                </div>
+            </div>
+
+            <input type="submit" id="signUpBtn" value="회원가입">
+        </form>
+
+    </div>
+</body>
+</html>
