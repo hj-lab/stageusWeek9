@@ -1,36 +1,3 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
-
-*{
-    font-family: 'Gowun Batang', serif;
-}
-
-body{
-    background-color: #e8e7d2;
-
-    display: flex;
-    justify-content: center;
-}
-
-#backParent{
-    width: 60%;
-    background-color: white;
-    border : 2px solid #c9ba9b;
-    border-radius: 20px;
-    padding : 40px;
-    margin-top : 60px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-}
-
-#myform{
-    display : flex;
-    flex-direction: column;    
-}
 #modifyComment{
     font-size : 20px;
     font-weight: bold;

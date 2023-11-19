@@ -1,0 +1,34 @@
+/* 공통 custom tag들에 대해 */
+
+#backParent{
+    width: 60%;
+    background-color: white;
+    border : 2px solid #c9ba9b;
+    border-radius: 20px;
+    padding : 40px;
+    margin-top : 60px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#myform{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin : 10px;
+}
+
+#backBtn{
+    /* padding: 7px 30px; */
+    margin:10px;
+    border:none;
+    border-radius: 10px;
+
+    text-align: center;
+    
+    background-color: #faf0e4;
+}

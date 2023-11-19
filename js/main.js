@@ -1,18 +1,10 @@
+
+// 모달창 관련 변수
 var modal = document.getElementById("modal");
 var openModalBtn = document.getElementById("scheduleBox");
 var closeModalBtn = document.getElementById("xImg");
-// 모달창 열기
-openModalBtn.onclick = function(){
-modal.style.display = "block";
-// document.body.style.overflow = "hidden"; // 스크롤바 제거
-};
-// 모달창 닫기
-closeModalBtn.onclick = function(){
-modal.style.display = "none";
-// document.body.style.overflow = "auto"; // 스크롤바 보이기
-};
 
-
+// 날짜 처리 관련 변수
 var current = new Date();
 var currentYear = current.getFullYear();
 var currentMonth = current.getMonth()+1;
@@ -20,14 +12,22 @@ var currentMonth = current.getMonth()+1;
 var year = document.getElementById("year");
 year.value = currentYear;
 
-console.log("현재년도는 "+currentYear);
-
 var month = document.getElementById("month");
 month.value = currentMonth; //월은 0~11로 표기되기 때문에 실제로는 +1 해줘야함
 
-// 현재 페이지에 오늘 날짜의 월에 해당하는 일 수 표기하기 위해
 var showMonth = "month"+parseInt(currentMonth);
+// 현재 페이지에 오늘 날짜의 월에 해당하는 일 수 표기하기 위해
 lastday(showMonth);
+
+
+// 모달창 열기
+openModalBtn.onclick = function(){
+modal.style.display = "block";
+};
+// 모달창 닫기
+closeModalBtn.onclick = function(){
+modal.style.display = "none";
+};
 
 
 function yearDown(){ 
@@ -41,7 +41,6 @@ function yearUp(){
     var yearValue = document.getElementById("year").value;
     year.value = parseInt(yearValue) + 1;
 }
-
 
 
 for(i=1; i<13; i++){ // 1~12월 버튼 생성
@@ -59,7 +58,6 @@ for(i=1; i<13; i++){ // 1~12월 버튼 생성
         lastday(this.id);
         monthfunc(this.id);
     }
-    
 
     monthBtnParent.appendChild(newBtn);
 }
@@ -80,8 +78,8 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
         day31.innerHTML = "";
     }
     else{
-    var lastday = new Date(2023, result, 0).getDate();
-    console.log(lastday.toLocaleString()); // 각 월의 마지막 날짜
+        var lastday = new Date(2023, result, 0).getDate();
+        console.log(lastday.toLocaleString()); // 각 월의 마지막 날짜
 
         if(lastday == 30){
             day29.innerHTML = 29;
@@ -106,7 +104,6 @@ function monthfunc(id){ //현재 페이지 month 출력함수
     month.value = parseInt(result);
 
 }
-
 
 
 function modifySchedule(){ // 수정 버튼 누를시
@@ -211,17 +208,15 @@ function openNav(){
     console.log("openNav 실행");
 
     var div = document.createElement("div");
-        div.id = "dimmed";
-        document.body.append(div);
+    div.id = "dimmed";
+    document.body.append(div);
           
-        var dimmed = document.querySelector("#dimmed");
-        dimmed.addEventListener("scroll wheel", function (e) {
-            // 문서 스크롤시, 마우스 휠 내릴시
+    var dimmed = document.querySelector("#dimmed");
+    dimmed.addEventListener("scroll wheel", function (e) {
             e.preventDefault(); //고유 동작 중단시킴
             e.stopPropagation(); // 상위 element로의 이벤트 전파를 중단시킴
-            // return false;
             }
-        );
+    );
                 
 }
 

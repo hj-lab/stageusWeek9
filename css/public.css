@@ -1,0 +1,14 @@
+/* 폰트, body 등에 대해 */
+
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
+
+*{
+    font-family: 'Gowun Batang', serif;
+}
+
+body{
+    background-color: #e8e7d2;
+
+    display: flex;
+    justify-content: center;
+}

@@ -1,34 +1,7 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap');
-
-*{
-    font-family: 'Gowun Batang', serif;
-}
-
-body{
-    background-color: #e8e7d2;
-
-    display: flex;
-    justify-content: center;
-}
-
-#backParent{
-    width: 60%;
-    background-color: white;
-    border : 2px solid #c9ba9b;
-    border-radius: 20px;
-    padding : 40px;
-    margin-top : 60px;
-
-    display: flex;
-    flex-direction: column;
-}
-
 #yearParent{
     display :flex;
     flex-direction : row;
     margin-bottom : 10px;
-
 }
 
 #triangleLeft{
@@ -43,8 +16,6 @@ body{
 
 #year{
     margin : 3px;
-    /* border : none;
-    background-color: wheat; */
 }
 
 #triangleRight{
@@ -67,6 +38,7 @@ body{
     font-weight: bold;
 }
 
+/* 팀장이 사원 클릭하는 경우의 페이지에만 출력 */
 #memberName{
     display : none;
 
@@ -213,7 +185,7 @@ tr{
     margin : 2px;
   }
 
-#modalSchdule{
+#modalSchedule{
     display : flex;
     flex-direction: row;
     justify-content: space-between;
@@ -427,4 +399,21 @@ tr{
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /*메뉴 클릭시 메뉴 밖의 화면은 어둡게*/
+  }
+
+
+  @media screen and (max-width : 400px){
+    #navBtn{
+        width : 10px;
+    }
+
+    #scheduleBox{
+        width : 60%;
+
+        font-size : 10px;
+    }
+
+    #modalScheduleBox{
+        width : 100%;
+    }
   }

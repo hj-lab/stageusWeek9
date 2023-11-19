@@ -1,10 +1,16 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link type="text/css" rel="stylesheet" href="../css/mainC.css">
+
+    <link type="text/css" rel="stylesheet" href="../css/common.css">
+    <link type="text/css" rel="stylesheet" href="../css/public.css">
+    <link type="text/css" rel="stylesheet" href="../css/main.css">
+    
 </head>
 <body>
     <div id="backParent">
@@ -33,7 +39,7 @@
             <tr>
                 <td>1</td>
                 <td>2</td>
-                <td>3 <input type="button" id="scheduleBox" value="3"> </td>
+                <td>3 <br> <input type="button" id="scheduleBox" value="3"> </td>
                 <td>4</td>
                 <td>5</td>
                 <td>6</td>
@@ -43,7 +49,7 @@
                 <td>8</td>
                 <td>9</td>
                 <td>10</td>
-                <td>11 <input type="button" id="scheduleBox" value="9+"> </td>
+                <td>11 </td>
                 <td>12</td>
                 <td>13</td>
                 <td>14</td>
@@ -111,7 +117,7 @@
                         </div>
 
                         <div id="addModalSchedule">
-                            <form id="modalSchdule" onsubmit="return false">
+                            <form id="modalSchedule" onsubmit="return false">
                                 <input type="text" class="modalScheduleComment" id="comment1" value="기획서 작성" disabled>
                                 <!-- disabled는 readonly와 다르게 form 전송할때 전송안됨 -->
                                 <div>
@@ -146,7 +152,7 @@
                         </div>
                         
                         <div id="addModalSchedule">
-                            <div id="modalSchdule">
+                            <div id="modalSchedule">
                                 <input type="text" id="modalScheduleComment" placeholder="내용을 추가하세요">
                                 <div>
                                     <input type="button" class="scheduleBtn" value="추가"> 
@@ -174,7 +180,7 @@
         </div>
 
         <div id="modifyMyInformParent">
-            <input type="button" id="modifyBtn" value="정보 수정" onclick="location.href='modifyInform.html'">
+            <input type="button" id="modifyBtn" value="정보 수정" onclick="location.href='modifyInform.jsp'">
         </div>
 
         <div id="logOutParent">
@@ -196,6 +202,6 @@
     </div>
 
 
-    <script src="../js/mainJ.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

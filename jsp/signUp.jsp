@@ -1,14 +1,20 @@
+<%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link type="text/css" rel="stylesheet" href="../css/signUpC.css">
+    <link type="text/css" rel="stylesheet" href="../css/signUp.css">
+    <link type="text/css" rel="stylesheet" href="../css/common.css">
+    <link type="text/css" rel="stylesheet" href="../css/public.css">
 </head>
 <body>
     <div id="backParent">
-        <div id="findIdComment">회원가입</div>
+        <div id="SignUpComment">회원가입</div>
+        <button onclick="history.back()" id="backBtn">이전으로</button>
+
 
         <form name="myform" action="findIdJ.jsp" id="myform">
             <div id="idParent">
