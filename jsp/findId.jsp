@@ -13,7 +13,7 @@
 </head>
 <body>
     <div id="backParent">
-        <div id="findIdComment">id 찾기</div>
+        <h1 id="findIdComment">id 찾기</h1>
         <button onclick="history.back()" id="backBtn">이전으로</button>
 
 

@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="backParent">
-        <div id="modifyComment">내 정보 수정</div>
+        <h1 id="modifyComment">내 정보 수정</h1>
 
         <button onclick="history.back()" id="backBtn">이전으로</button>
 

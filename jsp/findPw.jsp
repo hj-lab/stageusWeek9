@@ -12,7 +12,7 @@
 </head>
 <body>
     <div id="backParent">
-        <div id="findPwComment">Pw 찾기</div>
+        <h1 id="findPwComment">Pw 찾기</h1>
         <button onclick="history.back()" id="backBtn">이전으로</button>
 
 
