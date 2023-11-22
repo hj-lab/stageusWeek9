@@ -16,15 +16,15 @@
         <button onclick="history.back()" id="backBtn">이전으로</button>
 
 
-        <form name="myform" action="findIdJ.jsp" id="myform" onsubmit="checkEvent(event)">
+        <form name="myform" action="signUpAction.jsp" id="myform" onsubmit="checkEvent(event)">
             <div id="idParent">
-                <input type="text" id="idValue" class="inputBox" placeholder="id 입력 / 4~11자">
+                <input type="text" name="id" id="idValue" class="inputBox" placeholder="id 입력 / 4~11자">
                 <input type="button" id="duplicateBtn" value="중복확인" onclick="idCheckEvent()">
             </div>
-            <input type="password" id="pwValue" class="inputBox" placeholder="pw 입력 / 영문자, 숫자 포함 8~15자">
+            <input type="password" name="pw" id="pwValue" class="inputBox" placeholder="pw 입력 / 영문자, 숫자 포함 8~15자">
             <input type="password" id="pwCheckValue" class="inputBox" placeholder="pw 확인">
-            <input type="text" id="nameValue" class="inputBox" placeholder="이름 입력 / 2~30자">
-            <input type="text" id="telValue" class="inputBox" placeholder="전화번호 입력 / - 제외">
+            <input type="text" name="name" id="nameValue" class="inputBox" placeholder="이름 입력 / 2~30자">
+            <input type="text" name="tel" id="telValue" class="inputBox" placeholder="전화번호 입력 / - 제외">
 
             <div id="rankParent">
                 <div id="Btn">직급</div>
@@ -54,7 +54,7 @@
 
     <script>
         function idCheckEvent(){
-            window.open("idCheck.jsp", "idCheck", "width=500 height=200")
+            window.open("idCheckAction.jsp", "idCheck", "width=500 height=200")
         }
 
         function checkEvent(event){

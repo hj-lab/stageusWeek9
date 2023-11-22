@@ -1,3 +1,4 @@
+<!-- 로그인 페이지 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +15,9 @@
     <div id="backParent">
         <div id="loginComment">로그인</div>
 
-        <form name="myform" action="loginJ.jsp" id="myform">
-            <input type="text" id="inputBox" placeholder="id입력 / 4~11자">
-            <input type="text" id="inputBox" placeholder="password입력 / 영문자, 숫자 포함 8~15자">
+        <form name="myform" action="./jsp/loginAction.jsp" id="myform">
+            <input type="text" name="id" id="inputBox" placeholder="id입력 / 4~11자">
+            <input type="password" name="pw" id="inputBox" placeholder="password입력 / 영문자, 숫자 포함 8~15자">
             <input type="submit" id="loginBtn" value="로그인">
         </form>
 
