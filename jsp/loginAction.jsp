@@ -61,7 +61,7 @@ idList.add("\""+id+"\"");
             location.href = "../index.html"
         }
         else{
-            alert(id+"님, 반갑습니다.")
+           
             location.href="mainPage.jsp"
         }
         

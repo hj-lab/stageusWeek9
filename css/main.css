@@ -95,15 +95,15 @@ tr{
   }
 
 #scheduleBox{
-    width : 40px;
+    width : 60%;
     border:none;
     border-radius: 10px;
     text-align: center;
-    
+    font-size : 10px;
+
     box-shadow: 2px 2px 2px 2px gray;
     background-color: #faf0e4;
     
-  
   }
 
 #modal{
