@@ -8,9 +8,32 @@
 <%
 request.setCharacterEncoding("utf-8");
 
-String id = (String)session.getAttribute("sessionId");
-
 boolean valid = true;
+
+String id = (String)session.getAttribute("sessionId");
+String name = (String)session.getAttribute("sessionName");
+String tel = (String)session.getAttribute("sessionTel");
+String rank = (String)session.getAttribute("sessionRank");
+String department = (String)session.getAttribute("sessionDepartment");
+
+ArrayList<String> idList = new ArrayList<String>();
+    idList.add("\""+id+"\"");
+
+    
+ArrayList<String> nameList = new ArrayList<String>();
+    nameList.add("\""+name+"\"");
+
+    
+ArrayList<String> telList = new ArrayList<String>();
+    telList.add("\""+tel+"\"");
+
+    
+ArrayList<String> rankList = new ArrayList<String>();
+    rankList.add("\""+rank+"\"");
+
+    
+ArrayList<String> departmentList = new ArrayList<String>();
+    departmentList.add("\""+department+"\"");
 
 if(id == null){
     valid = false;
@@ -149,16 +172,16 @@ if(id == null){
         <div id="myInformParent">
             <div id="myInformComment">내 정보</div>
             <div>
-                <div>이름 : 조희주</div>
-                <div>Id : myid</div>
-                <div>전화번호 : 010-1234-5678</div>
-                <div>직급 : 팀원</div>
-                <div>부서 : 개발팀</div>
+                <div id="myName">이름 : </div>
+                <div id="myId">Id : </div>
+                <div id="myTel">전화번호 : </div>
+                <div id="myRank">직급 : </div>
+                <div id="myDepartment">부서 : </div>
             </div>
         </div>
 
         <div id="modifyMyInformParent">
-            <input type="button" id="modifyBtn" value="정보 수정" onclick="location.href='modifyInform.jsp'">
+            <input type="button" id="modifyBtn" value="정보 수정" onclick="location.href='modifyInformPage.jsp'">
         </div>
 
         <div id="logOutParent">
@@ -184,11 +207,47 @@ if(id == null){
 
     <script>
         var valid = <%= valid %>
+        var id = <%= idList %>
+        var name = <%= nameList %>
+        var tel = <%= telList %>
+        var rank = <%= rankList %>
+        var department = <%= departmentList %>
+
+        console.log("현재 sessionId : "+id)
+        console.log("현재 sessionName : "+name)
+        console.log("현재 sessionTel : "+tel)
+        console.log("현재 sessionRank : "+rank)
+        console.log("현재 sessionDepartment : "+department)
 
        if(valid == false){
             alert("로그인 하십시오!")
             location.href = "../index.html"
        }
+       else{ // 내 정보 표시
+        var myName = document.getElementById("myName")
+        var myId = document.getElementById("myId")
+        var myTel = document.getElementById("myTel")
+        var myRank = document.getElementById("myRank")
+        var myDepartment = document.getElementById("myDepartment")
+
+        var nameDiv = document.createElement("span")
+        nameDiv.innerHTML = name
+        var idDiv = document.createElement("span")
+        idDiv.innerHTML = id
+        var telDiv = document.createElement("span")
+        telDiv.innerHTML = tel
+        var rankDiv = document.createElement("span")
+        rankDiv.innerHTML = rank
+        var departmentDiv = document.createElement("span")
+        departmentDiv.innerHTML = department
+        
+        myName.appendChild(nameDiv)
+        myId.appendChild(idDiv)
+        myTel.appendChild(telDiv)
+        myRank.appendChild(rankDiv)
+        myDepartment.appendChild(departmentDiv)
+
+        }
 
     </script>
 </body>

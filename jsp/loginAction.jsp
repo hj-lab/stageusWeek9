@@ -12,8 +12,6 @@ String idValue = request.getParameter("id");
 String pwValue = request.getParameter("pw");
 
 
-// 예외처리 필요 !!!!!!!!
-
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
