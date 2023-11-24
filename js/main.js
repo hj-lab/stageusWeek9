@@ -15,21 +15,14 @@ var showMonth = "month"+parseInt(currentMonth);
 // 현재 페이지에 오늘 날짜의 월에 해당하는 일 수 표기하기 위해
 lastday(showMonth);
 
-}
 
-// // 모달창 관련 변수
-// var modal = document.getElementById("modal");
 // var openModalBtn = document.getElementById("scheduleBox");
-// var closeModalBtn = document.getElementById("xImg");
+var closeModalBtn = document.getElementById("xImg");
 
-// // 모달창 열기
-// openModalBtn.onclick = function(){
-//     modal.style.display = "block";
-// };
 // // 모달창 닫기
-// closeModalBtn.onclick = function(){
-//     modal.style.display = "none";
-// };
+closeModalBtn.onclick = function(){
+    modal.style.display = "none";
+};
 
 
 for(i=1; i<13; i++){ // 1~12월 버튼 생성
@@ -51,42 +44,45 @@ for(i=1; i<13; i++){ // 1~12월 버튼 생성
     monthBtnParent.appendChild(newBtn);
 }
 
+}
+
+
+// 캘린더 메인에 출력 관련
 var calendarParent = document.getElementById("calendar")
+var modal = document.getElementById("modal")
+
 for(var i=0; i<5; i++){
     var newRow = calendarParent.insertRow()
+    for(var j=0; j<7; j++){
 
-    var newCell1 = newRow.insertCell(0)
-    var newCell2 = newRow.insertCell(1)
-    var newCell3 = newRow.insertCell(2)
-    var newCell4 = newRow.insertCell(3)
-    var newCell5 = newRow.insertCell(4)
-    var newCell6 = newRow.insertCell(5)
-    var newCell7 = newRow.insertCell(6)
-
-    if(i<4){
-        newCell1.innerHTML = i*7+1
-        newCell2.innerHTML = i*7+2
-        newCell3.innerHTML = i*7+3
-        newCell4.innerHTML = i*7+4
-        newCell5.innerHTML = i*7+5
-        newCell6.innerHTML = i*7+6
-        newCell7.innerHTML = i*7+7
-    }
-    else{
-        newCell1.id = "day29"
-        newCell2.id = "day30"
-        newCell3.id = "day31"
-        newCell4.id = ""
-        newCell5.id = ""
-        newCell6.id = ""
-        newCell7.id = ""
+        var newCell = newRow.insertCell()
         
-       
+        newCell.onclick = function(){
+            modal.style.display = "block"
+        }
+
+        if(i<4){
+            newCell.innerHTML = i*7 + (j+1)
+        }
+        else{
+            if(j == 0){
+                newCell.id = "day29"
+            }
+            else if(j == 1){
+                newCell.id = "day30"
+            }
+            else if(j == 2){
+                newCell.id = "day31"
+            }
+            else{
+                newCell.innerHTML = ""
+            }
+        }
     }
 
 }
 
-
+// 년도 조절 함수
 function yearDown(){ 
     var year = document.getElementById("year");
     var yearValue = document.getElementById("year").value;
@@ -98,7 +94,6 @@ function yearUp(){
     var yearValue = document.getElementById("year").value;
     year.value = parseInt(yearValue) + 1;
 }
-
 
 // 월 버튼을 클릭했을때 month1 형식으로 인자 전달 (id자리에)
 function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
@@ -115,16 +110,13 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
     var lastday = new Date(2023, result, 0).getDate();
 
     if(result != 2){
-        
-        
         if(lastday == 30){
-            console.log("lastday함수 호출. 마지막 일은 "+lastday)
             day29.innerHTML = 29;
             day30.innerHTML = 30;
             day31.innerHTML = "";
         }
         else if(lastday == 31){
-            console.log("lastday함수 호출. 마지막 일은 "+lastday)
+            
             day29.innerHTML = 29
             day30.innerHTML = 30
             day31.innerHTML = 31
@@ -145,7 +137,7 @@ function monthfunc(id){ //현재 페이지 month 출력함수
     
     var reg = /[^0-9]/g;
     var result = id.replace(reg, ""); // 각 월 추출
-    console.log("monthfunc 실행, result 월은 "+result); 
+   // console.log("monthfunc 실행, result 월은 "+result); 
 
     month.value = parseInt(result);
 
