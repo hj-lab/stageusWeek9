@@ -1,4 +1,23 @@
 <%@ page language="java" contentType="text/html" pageEncoding="utf-8" %>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.ArrayList" %>
+
+<%
+request.setCharacterEncoding("utf-8");
+
+String id = (String)session.getAttribute("sessionId");
+
+boolean valid = true;
+
+if(id == null){
+    valid = false;
+}    
+
+%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -162,5 +181,17 @@
 
 
     <script src="../js/main.js"></script>
+
+    <script>
+        var valid = <%= valid %>
+
+       if(valid == false){
+            alert("로그인 하십시오!")
+            location.href = "../index.html"
+       }
+
+    </script>
 </body>
 </html>
+
+<!-- 스케줄이 있을때 띄우는 박스 : scheduleBox! -->

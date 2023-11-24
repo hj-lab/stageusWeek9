@@ -16,16 +16,15 @@ var showMonth = "month"+parseInt(currentMonth);
 lastday(showMonth);
 
 
-// var openModalBtn = document.getElementById("scheduleBox");
+//모달창 닫기
 var closeModalBtn = document.getElementById("xImg");
 
-// // 모달창 닫기
 closeModalBtn.onclick = function(){
     modal.style.display = "none";
 };
 
-
-for(i=1; i<13; i++){ // 1~12월 버튼 생성
+// 1~12월 버튼 생성
+for(i=1; i<13; i++){ 
     var newBtn = document.createElement("INPUT");
     newBtn.setAttribute("type", "button");
     var monthBtnParent = document.getElementById("monthBtnParent");
