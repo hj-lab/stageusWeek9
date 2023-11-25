@@ -93,6 +93,10 @@ for(var i=0; i<5; i++){
             }
         }
 
+// 모달창에서 일정 추가 버튼 -> 현재 시간 default로 하기 위해
+var today = new Date();   
+var addHour = document.getElementById("addHour")
+addHour.value = ('0' + today.getHours()).slice(-2); 
 }
 
 // 모달창 맨 위에 날짜 나타내는 함수 (onclick에 부여)
@@ -109,7 +113,7 @@ function displayDate(id){
     var day = id.innerHTML
     modalDay.innerHTML = day
 }
-// 년도 조절 함수
+// 년도 조절 함수 (좌,우 버튼)
 function yearDown(){ 
     var year = document.getElementById("year");
     var yearValue = document.getElementById("year").value;
@@ -160,8 +164,6 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
 function monthfunc(id){ //현재 페이지 month 출력함수
     var month = document.getElementById("month");
 
-    
-    
     var reg = /[^0-9]/g;
     var result = id.replace(reg, ""); // 각 월 추출
    // console.log("monthfunc 실행, result 월은 "+result); 
@@ -194,10 +196,11 @@ function modifySchedule(){ // 수정 버튼 누를시
     
 }
 
+
 function hourUp(){
-    var hour = document.getElementById("hour");
-    var hourValue = parseInt(document.getElementById("hour").value);
-    
+    var hour = document.getElementById("addHour");
+    var hourValue = parseInt(document.getElementById("addHour").value); 
+
     if(hourValue < 23){
         hour.value = hourValue + 1;
     }
@@ -209,8 +212,8 @@ function hourUp(){
 }
 
 function hourDown(){
-    var hour = document.getElementById("hour");
-    var hourValue = parseInt(document.getElementById("hour").value);
+    var hour = document.getElementById("addHour");
+    var hourValue = parseInt(document.getElementById("addHour").value);
     
     if(hourValue > 0){
         hour.value = hourValue - 1;
@@ -222,34 +225,29 @@ function hourDown(){
 }
 
 function minuteDown(){ // 왜안내려가
-    var minute = document.getElementById("minute");
-    var minuteValue = parseInt(document.getElementById("minute").value);
+    var minute = document.getElementById("addMinute");
+    var minuteValue = parseInt(document.getElementById("addMinute").value);
     console.log("현재 minutevalue는"+minuteValue);
     if(minuteValue > 0){
         if(minuteValue-5 == 5){
-            console.log(minuteValue);
             minute.value = "05"; 
         }
         else if(minuteValue-5 == 0){
-            minute.value = "00";
+            minute.value = "00"
         }
         else{
         minute.value = minuteValue - 5;
-
-        console.log(minuteValue);
         }
     }
     else{ //minuteValue <=0 일때
-        minuteValue += 60;
-    
-
-        console.log("실행"+minuteValue);
+        minuteValue += 55;
+        minute.value = minuteValue
     }
 }
 
 function minuteUp(){
-    var minute = document.getElementById("minute");
-    var minuteValue = parseInt(document.getElementById("minute").value);
+    var minute = document.getElementById("addMinute");
+    var minuteValue = parseInt(document.getElementById("addMinute").value);
     
     if(minuteValue < 60){
         if(minuteValue+5 == 5){

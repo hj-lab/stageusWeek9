@@ -127,35 +127,38 @@ if(id == null){
 
                     <!-- 구분선 -->
 
-                    <div id="modalScheduleAdd"> <!-- 일정 추가 칸-->
+                    <form action="addScheduleAction.jsp" id="modalScheduleAdd"> <!-- 일정 추가 칸-->
 
+                        <!-- 시간칸 -->
                         <div id="addModalTime">
                             <div id="updownBtn">
-                                <div class="triangleTop" id="addHourUpBtn"></div>
-                                <div class="triangleTop" id="minuteUpBtn" ></div>
+                                <div class="triangleTop" id="addHourUpBtn" onclick="hourUp()"></div>
+                                <div class="triangleTop" id="minuteUpBtn" onclick="minuteUp()"></div>
                             </div>
 
                             <div id="modalTime">
-                                <input type="button" id="hour" value="10">
+                                <input type="button" id="addHour">
                                 <div> : </div>
-                                <input type="button" id="minute" value="35">
+                                <input type="button" id="addMinute" value="00">
                             </div>
 
                             <div id="updownBtn">
-                                <div class="triangleBottom" id="hourDownBtn" ></div>
-                                <div class="triangleBottom" id="minuteDownBtn" ></div>                        
+                                <div class="triangleBottom" id="hourDownBtn" onclick="hourDown()" ></div>
+                                <div class="triangleBottom" id="minuteDownBtn" onclick="minuteDown()" ></div>                        
                             </div>
                         </div>
                         
+                        <!-- 일정칸 -->
                         <div id="addModalSchedule">
                             <div id="modalSchedule">
-                                <input type="text" id="modalScheduleComment" placeholder="내용을 추가하세요">
+                                <input type="text" class="modalScheduleComment" placeholder="내용을 추가하세요">
                                 <div>
-                                    <input type="button" class="scheduleBtn" value="추가"> 
+                                    <input type="submit" class="scheduleBtn" value="추가"> 
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                    </form>
 
                     <img src="../img/x.png" id="xImg">
             </div>    
