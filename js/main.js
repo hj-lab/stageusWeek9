@@ -15,7 +15,6 @@ var showMonth = "month"+parseInt(currentMonth);
 // 현재 페이지에 오늘 날짜의 월에 해당하는 일 수 표기하기 위해
 lastday(showMonth);
 
-
 //모달창 닫기
 var closeModalBtn = document.getElementById("xImg");
 
@@ -52,35 +51,64 @@ var modal = document.getElementById("modal")
 
 for(var i=0; i<5; i++){
     var newRow = calendarParent.insertRow()
-    for(var j=0; j<7; j++){
+        for(var j=0; j<7; j++){
+            var newCell = newRow.insertCell()
 
-        var newCell = newRow.insertCell()
-        
-        newCell.onclick = function(){
-            modal.style.display = "block"
-        }
+            if(i<4){
+                newCell.innerHTML = i*7 + (j+1)
 
-        if(i<4){
-            newCell.innerHTML = i*7 + (j+1)
-        }
-        else{
-            if(j == 0){
-                newCell.id = "day29"
-            }
-            else if(j == 1){
-                newCell.id = "day30"
-            }
-            else if(j == 2){
-                newCell.id = "day31"
+                newCell.onclick = function(){
+                    modal.style.display = "block"
+                    displayDate(this)
+                }
             }
             else{
-                newCell.innerHTML = ""
+                if(j == 0){
+                    newCell.id = "day29"
+
+                    newCell.onclick = function(){
+                        modal.style.display = "block"
+                        displayDate(this)
+                    }
+                }
+                else if(j == 1){
+                    newCell.id = "day30"
+
+                    newCell.onclick = function(){
+                        modal.style.display = "block"
+                        displayDate(this)
+                    }
+                }
+                else if(j == 2){
+                    newCell.id = "day31"
+
+                    newCell.onclick = function(){
+                        modal.style.display = "block"
+                        displayDate(this)
+                    }
+                }
+                else{
+                    newCell.innerHTML = ""
+                }
             }
         }
-    }
 
 }
 
+// 모달창 맨 위에 날짜 나타내는 함수 (onclick에 부여)
+function displayDate(id){
+    var modalYear = document.getElementById("modalYear")
+    var year = document.getElementById("year").value
+    modalYear.innerHTML = year
+
+    var modalMonth = document.getElementById("modalMonth")
+    var month = document.getElementById("month").value
+    modalMonth.innerHTML = month
+
+    var modalDay = document.getElementById("modalDay")
+    var day = id.innerHTML
+    modalDay.innerHTML = day
+}
 // 년도 조절 함수
 function yearDown(){ 
     var year = document.getElementById("year");

@@ -78,21 +78,16 @@ if(id == null){
             <img src="../img/sidebar.png" onclick="openNav()" id="navBtn">
         </div>
         <table id="calendar">
-            
-                <!-- <td>3 <br> <input type="button" id="scheduleBox" value="3"> </td> -->
-           
-           
-
+            <!-- <td>3 <br> <input type="button" id="scheduleBox" value="3"> </td> -->
         </table>
-
 
         <!-- 평소에는 안보이는창 -->
         <div id="modal">
             <div id="modalContents">
                 <div id="modalDate">
-                    <span>2023</span>년
-                    <span>11</span>월
-                    <span>1</span>일
+                    <span id="modalYear">2023</span>년
+                    <span id="modalMonth">11</span>월
+                    <span id="modalDay">1</span>일
                 </div>
 
                 <div id="modalScheduleParent"> 
@@ -219,6 +214,7 @@ if(id == null){
         console.log("현재 sessionRank : "+rank)
         console.log("현재 sessionDepartment : "+department)
 
+        // 로그인 상태가 아니면 mainPage에 들어올 수 없도록 처리
        if(valid == false){
             alert("로그인 하십시오!")
             location.href = "../index.html"
