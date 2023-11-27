@@ -43,7 +43,7 @@ query.executeUpdate();
 </head>
 <body>
     <script>
-        location.href = "mainPage.jsp"
+        location.href = "../index.html"
     </script>
 </body>
 </html>

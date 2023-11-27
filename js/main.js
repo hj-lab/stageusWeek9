@@ -42,6 +42,11 @@ for(i=1; i<13; i++){
     monthBtnParent.appendChild(newBtn);
 }
 
+// 모달창에서 일정 추가 버튼 -> 현재 시간 default로 하기 위해
+var today = new Date();   
+var addHour = document.getElementById("addHour")
+addHour.value = ('0' + today.getHours()).slice(-2);
+
 }
 
 
@@ -91,12 +96,7 @@ for(var i=0; i<5; i++){
                     newCell.innerHTML = ""
                 }
             }
-        }
-
-// 모달창에서 일정 추가 버튼 -> 현재 시간 default로 하기 위해
-var today = new Date();   
-var addHour = document.getElementById("addHour")
-addHour.value = ('0' + today.getHours()).slice(-2); 
+        } 
 }
 
 // 모달창 맨 위에 날짜 나타내는 함수 (onclick에 부여)

@@ -22,7 +22,7 @@ ResultSet result = query.executeQuery();
 
 boolean valid = false;
 
-if(result.next()){
+while(result.next()){
     if(result.getString(2).equals(idValue) && result.getString(3).equals(pwValue)){
         valid = true;
         session.setAttribute("sessionId", idValue);
@@ -54,6 +54,7 @@ idList.add("\""+id+"\"");
         var valid = <%= valid %>
         var id = <%= idList %>
 
+       
         if(valid == false){
             alert("일치하는 로그인 정보가 없습니다.")
             location.href = "../index.html"

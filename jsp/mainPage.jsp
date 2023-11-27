@@ -56,13 +56,12 @@ if(id == null){
 </head>
 <body>
     <div id="backParent">
-        <div id="yearParent">
+        <header id="yearParent">
             <div id="triangleLeft" onclick="yearDown()"></div>
             <div>
                 <input type="button" id="year">
                 <span>년</span>
             </div>
-
             <div id="triangleRight" onclick="yearUp()"></div>
             <div>
                 <input type="button" id="month">
@@ -71,7 +70,7 @@ if(id == null){
 
             <!-- 팀장일때만 출력하는 요소 -->
             <div id="memberName">조희주 팀원</div>
-        </div>
+        </header>
 
         <div id="monthBtnArea">
             <div id="monthBtnParent"></div> <!--월 표시 칸-->
@@ -82,19 +81,22 @@ if(id == null){
         </table>
 
         <!-- 평소에는 안보이는창 -->
-        <div id="modal">
-            <div id="modalContents">
-                <div id="modalDate">
-                    <span id="modalYear">2023</span>년
-                    <span id="modalMonth">11</span>월
-                    <span id="modalDay">1</span>일
-                </div>
+        <nav id="modal">
+            <form action="addScheduleAction.jsp" id="modalContents">
+                <header id="modalDate">
+                    <span id="modalYear" name="modalYearName"></span>년
+                    <span id="modalMonth" name="modalMonthName"></span>월
+                    <span id="modalDay" name="modalDayName"></span>일
+                </header>
 
                 <div id="modalScheduleParent"> 
 
                     <div id="modalScheduleBox"> <!-- 일반 일정 출력 목록-->
-                        
-                        <div id="addModalTime"> <!-- 이 버튼은 평소에 안보이게-->
+                        <!--이거 js에서 동적으로 생성하게 하자-->
+                        <!-- 그리고 이 칸에 스크롤 기능 넣기 !!-->
+
+                        <!-- 이 버튼은 평소에 안보이게-->
+                        <!-- <div id="addModalTime"> 
                             <div id="hideUpBtn">
                                 <div class="triangleTop" id="hourUpBtn" onclick="hourUp()"></div>
                                 <div class="triangleTop"  id="minuteUpBtn" onclick="minuteUp()"></div>
@@ -115,19 +117,18 @@ if(id == null){
                         <div id="addModalSchedule">
                             <form id="modalSchedule" onsubmit="return false">
                                 <input type="text" class="modalScheduleComment" id="comment1" value="기획서 작성" disabled>
-                                <!-- disabled는 readonly와 다르게 form 전송할때 전송안됨 -->
                                 <div>
                                     <input type="submit" class="scheduleBtn" value="수정" onclick="modifySchedule();"> 
                                     <input type="button" class="scheduleBtn" value="삭제"> 
                                 </div>
                             </form>
-                        </div>  
+                        </div>   -->
 
                     </div>
 
-                    <!-- 구분선 -->
-
-                    <form action="addScheduleAction.jsp" id="modalScheduleAdd"> <!-- 일정 추가 칸-->
+                
+                    <!-- 일정 추가 칸-->
+                    <div id="modalScheduleAdd"> 
 
                         <!-- 시간칸 -->
                         <div id="addModalTime">
@@ -137,9 +138,9 @@ if(id == null){
                             </div>
 
                             <div id="modalTime">
-                                <input type="button" id="addHour">
+                                <input type="button" id="addHour" name="addHourName">
                                 <div> : </div>
-                                <input type="button" id="addMinute" value="00">
+                                <input type="button" id="addMinute" name="addMinuteName" value="0">
                             </div>
 
                             <div id="updownBtn">
@@ -151,19 +152,18 @@ if(id == null){
                         <!-- 일정칸 -->
                         <div id="addModalSchedule">
                             <div id="modalSchedule">
-                                <input type="text" class="modalScheduleComment" placeholder="내용을 추가하세요">
+                                <input type="text" class="modalScheduleComment" placeholder="내용을 추가하세요" name="addScheduleName">
                                 <div>
                                     <input type="submit" class="scheduleBtn" value="추가"> 
                                 </div>
                             </div>
                         </div>
 
-                    </form>
-
+                    </div>
                     <img src="../img/x.png" id="xImg">
-            </div>    
-        </div>
-    </div>
+                </div>    
+            </form>
+        </nav>
 
     <!-- 사이드바 -->
     <div id="navBar">
