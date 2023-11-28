@@ -142,6 +142,11 @@ tr{
     margin : 10px;
   }
 
+.modalDate{
+    width : 30px;
+    text-align: center;
+}
+
 #modalScheduleParent{
     display : flex;
     flex-direction: column;
@@ -175,6 +180,11 @@ tr{
     text-align: center;
     justify-content: center;
     align-items: center;
+  }
+
+  .addTime{
+    width : 15px;
+    text-align: center;
   }
 
   #Hour{

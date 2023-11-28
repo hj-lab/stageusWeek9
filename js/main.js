@@ -103,15 +103,17 @@ for(var i=0; i<5; i++){
 function displayDate(id){
     var modalYear = document.getElementById("modalYear")
     var year = document.getElementById("year").value
-    modalYear.innerHTML = year
+    modalYear.value = year
 
     var modalMonth = document.getElementById("modalMonth")
     var month = document.getElementById("month").value
-    modalMonth.innerHTML = month
+    modalMonth.value = month
 
     var modalDay = document.getElementById("modalDay")
     var day = id.innerHTML
-    modalDay.innerHTML = day
+    modalDay.value = day
+
+    console.log("modalYear : "+modalYear.value)
 }
 // 년도 조절 함수 (좌,우 버튼)
 function yearDown(){ 

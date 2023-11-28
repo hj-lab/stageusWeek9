@@ -11,7 +11,7 @@ request.setCharacterEncoding("utf-8");
 //해당 일정의 년, 월, 일
 String yearValue = request.getParameter("modalYearName");
 String monthValue = request.getParameter("modalMonthName");
-String dayValue = request.getParameter("modalDayValue");
+String dayValue = request.getParameter("modalDayName");
 // 해당 일정의 시간, 분
 String hourValue = request.getParameter("addHourName");
 String minuteValue = request.getParameter("addMinuteName");
@@ -25,7 +25,7 @@ Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
 //SQL 만들기 (회원탈퇴하고싶으면 sql문만 바꿔주면됨 -> insert,update,delete 다 똑같음)
-String sql = "INSERT INTO schedule(name, id, year, month, day, hour, minute, contents) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+String sql = "INSERT INTO schedule(name, id, year, month, day, hour, minute, content) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 PreparedStatement query = connect.prepareStatement(sql);
 
 query.setString(1, nameValue);
@@ -42,3 +42,18 @@ query.executeUpdate();
 
 
 %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        window.history.back();
+        // 페이지 이동 없이 원래 화면에 있도록
+    </script>
+</body>
+</html>

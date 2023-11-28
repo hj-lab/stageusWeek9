@@ -84,9 +84,9 @@ if(id == null){
         <nav id="modal">
             <form action="addScheduleAction.jsp" id="modalContents">
                 <header id="modalDate">
-                    <span id="modalYear" name="modalYearName"></span>년
-                    <span id="modalMonth" name="modalMonthName"></span>월
-                    <span id="modalDay" name="modalDayName"></span>일
+                    <input type="text" id="modalYear" name="modalYearName" class="modalDate" readonly>년
+                    <input type="text" id="modalMonth" name="modalMonthName" class="modalDate" readonly>월
+                    <input type="text" id="modalDay" name="modalDayName" class="modalDate" readonly>일
                 </header>
 
                 <div id="modalScheduleParent"> 
@@ -138,9 +138,9 @@ if(id == null){
                             </div>
 
                             <div id="modalTime">
-                                <input type="button" id="addHour" name="addHourName">
+                                <input type="text" id="addHour" name="addHourName" class="addTime" readonly>
                                 <div> : </div>
-                                <input type="button" id="addMinute" name="addMinuteName" value="0">
+                                <input type="text" id="addMinute" name="addMinuteName" class="addTime" value="00" readonly>
                             </div>
 
                             <div id="updownBtn">
