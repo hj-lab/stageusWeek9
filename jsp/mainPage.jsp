@@ -4,12 +4,13 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 
 <%
 request.setCharacterEncoding("utf-8");
 
+// 내 정보 표시 
 boolean valid = true;
-
 String id = (String)session.getAttribute("sessionId");
 String name = (String)session.getAttribute("sessionName");
 String tel = (String)session.getAttribute("sessionTel");
@@ -37,7 +38,26 @@ ArrayList<String> departmentList = new ArrayList<String>();
 
 if(id == null){
     valid = false;
-}    
+} 
+// △ 내 정보 표시 관련
+
+// ▽ 모달창 -> 일정 추가 관련
+List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule");
+
+StringBuilder formattedData = new StringBuilder("[");
+
+// 2차원 배열을 문자열 형태로 변환
+for (List<String> innerList : DayScheduleList) {
+    formattedData.append("[\"");
+    for (String value : innerList) {
+        formattedData.append(value).append("\", \"");
+    }
+    formattedData.delete(formattedData.length() - 3, formattedData.length()); // 마지막 쉼표 및 따옴표 제거
+    formattedData.append("], ");
+}
+formattedData.delete(formattedData.length() - 2, formattedData.length()); // 마지막 쉼표 제거
+formattedData.append("]"); // 배열 종료
+%>
 
 %>
 
@@ -96,7 +116,7 @@ if(id == null){
                         <!-- 그리고 이 칸에 스크롤 기능 넣기 !!-->
 
                         <!-- 이 버튼은 평소에 안보이게-->
-                        <!-- <div id="addModalTime"> 
+                         <div id="addModalTime"> 
                             <div id="hideUpBtn">
                                 <div class="triangleTop" id="hourUpBtn" onclick="hourUp()"></div>
                                 <div class="triangleTop"  id="minuteUpBtn" onclick="minuteUp()"></div>
@@ -115,14 +135,14 @@ if(id == null){
                         </div>
 
                         <div id="addModalSchedule">
-                            <form id="modalSchedule" onsubmit="return false">
+                            <!-- <form id="modalSchedule" onsubmit="return false">
                                 <input type="text" class="modalScheduleComment" id="comment1" value="기획서 작성" disabled>
                                 <div>
                                     <input type="submit" class="scheduleBtn" value="수정" onclick="modifySchedule();"> 
                                     <input type="button" class="scheduleBtn" value="삭제"> 
                                 </div>
-                            </form>
-                        </div>   -->
+                            </form> -->
+                        </div>    
 
                     </div>
 
@@ -152,7 +172,7 @@ if(id == null){
                         <!-- 일정칸 -->
                         <div id="addModalSchedule">
                             <div id="modalSchedule">
-                                <input type="text" class="modalScheduleComment" placeholder="내용을 추가하세요" name="addScheduleName">
+                                <input type="text" id="modalComment" class="modalScheduleComment" placeholder="내용을 추가하세요" name="addScheduleName">
                                 <div>
                                     <input type="submit" class="scheduleBtn" value="추가"> 
                                 </div>
@@ -204,6 +224,7 @@ if(id == null){
     <script src="../js/main.js"></script>
 
     <script>
+        // ▽ 내 정보 표시 관련
         var valid = <%= valid %>
         var id = <%= idList %>
         var name = <%= nameList %>
@@ -247,6 +268,90 @@ if(id == null){
         myDepartment.appendChild(departmentDiv)
 
         }
+
+        // △ 내 정보 표시 관련
+
+        // ▽ 모달창 -> 일정 추가시 관련
+    var jsDataList = <%= formattedData.toString() %>
+
+    // console.log("방금 생성한 날짜의 jsDataList : "+jsDataList);
+    // var value = jsDataList[2][0]
+    // console.log("첫번째 요소 "+value)
+    
+
+//     var addModalTime = document.getElementById("addModalTime")
+
+//     for(var i=0; i<jsDataList.length; i++){
+//             //시간 관련
+//             // △△
+//             var upDiv = document.createElement("div")
+//             upDiv.style.display = 'flex'
+//             upDiv.style.flexDirection = 'row'
+//             upDiv.style.justifyContent = "center"
+           
+//             var hourUpBtn = document.createElement("div")
+//             hourUpBtn.id = "hourUpBtn"
+//             hourUpBtn.className = "triangleTop"
+
+//             var minuteUpBtn = document.createElement("div")
+//             minuteUpBtn.id = "minuteUpBtn"
+//             minuteUpBtn.className = "triangleTop"
+            
+//             upDiv.appendChild(hourUpBtn)
+//             upDiv.appendChild(minuteUpBtn)
+//             //
+
+//             // ㅁ:ㅁ
+//             var timeDiv = document.createElement("div")
+//             timeDiv.style.display = "flex"
+//             timeDiv.style.flexDirection = "row"
+//             timeDiv.style.textAlign = "center"
+//             timeDiv.style.justifyContent = "center"
+//             timeDiv.style.border = "2px solid orange"
+//             timeDiv.style.borderRadius = "10px"
+
+//             var hour = document.createElement("input")
+//             hour.type = "text"
+//             hour.className = "addTime"
+//             hour.value = jsDataList[i][2]
+
+//             var dot = document.createElement("div")
+//             dot.innerHTML = ":"
+
+//             var minute = document.createElement("input")
+//             minute.type = "text"
+//             minute.className = "addTime"
+//             minute.value = jsDataList[i][3]
+
+//             timeDiv.appendChild(hour)
+//             timeDiv.appendChild(dot)
+//             timeDiv.appendChild(minute)
+//             //
+
+//             //▽▽
+//             var downDiv = document.createElement("div")
+//             downDiv.style.display = 'flex'
+//             downDiv.style.flexDirection = 'row'
+//             downDiv.style.justifyContent = "center"
+
+//             var hourDownBtn = document.createElement("div")
+//             hourDownBtn.id = "hourDownBtn"
+//             hourDownBtn.className = "triangleBottom"
+  
+//             var minuteDownBtn = document.createElement("div")
+//             minuteDownBtn.id = "minuteDownBtn"
+//             minuteDownBtn.className = "triangleBottom"
+  
+//             downDiv.appendChild(hourDownBtn)
+//             downDiv.appendChild(minuteDownBtn)
+
+//             addModalTime.appendChild(upDiv)
+//             addModalTime.appendChild(timeDiv)
+//             addModalTime.appendChild(downDiv)
+                                          
+// }
+
+
 
     </script>
 </body>

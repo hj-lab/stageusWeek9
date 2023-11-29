@@ -114,7 +114,7 @@ tr{
     top: 0;
     width: 100%; 
     height: 100%; 
-    overflow: auto; 
+    overflow-y: auto; 
     background-color: rgba(0,0,0,0.4); 
   }
 
@@ -183,7 +183,7 @@ tr{
   }
 
   .addTime{
-    width : 15px;
+    width : 25px;
     text-align: center;
   }
 

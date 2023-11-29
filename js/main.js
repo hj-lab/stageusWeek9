@@ -64,7 +64,11 @@ for(var i=0; i<5; i++){
 
                 newCell.onclick = function(){
                     modal.style.display = "block"
-                    displayDate(this)
+                    var dateValues = displayDate(this)
+                    sendDataToJsp(dateValues)
+
+                    console.log("sendTo함수")
+                    // newCell의 innerHTML(일), 월, 년도 가져와야함
                 }
             }
             else{
@@ -99,6 +103,36 @@ for(var i=0; i<5; i++){
         } 
 }
 
+function sendDataToJsp(dateValues){
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', 'displayScheduleAction.jsp'); // 데이터를 전달할 JSP 페이지
+
+    var hiddenFieldYear = document.createElement('input');
+    hiddenFieldYear.setAttribute('type', 'hidden');
+    hiddenFieldYear.setAttribute('name', "year");
+    hiddenFieldYear.setAttribute('value', dateValues.year); // 전달할 데이터의 이름 설정
+    
+    var hiddenFieldMonth = document.createElement('input');
+    hiddenFieldMonth.setAttribute('type', 'hidden');
+    hiddenFieldMonth.setAttribute('name', "month");
+    hiddenFieldMonth.setAttribute('value', dateValues.month); // 전달할 데이터의 이름 설정
+    
+    var hiddenFieldDay = document.createElement('input');
+    hiddenFieldDay.setAttribute('type', 'hidden');
+    hiddenFieldDay.setAttribute('name', "day");
+    hiddenFieldDay.setAttribute('value', dateValues.day); // 전달할 데이터의 이름 설정
+    
+    form.appendChild(hiddenFieldYear);
+    form.appendChild(hiddenFieldMonth);
+    form.appendChild(hiddenFieldDay);
+    
+    document.body.appendChild(form);
+    form.submit();
+
+    console.log("sendDataTojsp")
+}
+
 // 모달창 맨 위에 날짜 나타내는 함수 (onclick에 부여)
 function displayDate(id){
     var modalYear = document.getElementById("modalYear")
@@ -114,6 +148,12 @@ function displayDate(id){
     modalDay.value = day
 
     console.log("modalYear : "+modalYear.value)
+    
+    return {
+        year : year,
+        month : month,
+        day : day
+    }
 }
 // 년도 조절 함수 (좌,우 버튼)
 function yearDown(){ 
