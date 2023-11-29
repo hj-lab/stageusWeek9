@@ -67,7 +67,6 @@ for(var i=0; i<5; i++){
                     var dateValues = displayDate(this)
                     sendDataToJsp(dateValues)
 
-                    console.log("sendTo함수")
                     // newCell의 innerHTML(일), 월, 년도 가져와야함
                 }
             }
@@ -77,7 +76,8 @@ for(var i=0; i<5; i++){
 
                     newCell.onclick = function(){
                         modal.style.display = "block"
-                        displayDate(this)
+                        var dateValues = displayDate(this)
+                        sendDataToJsp(dateValues)
                     }
                 }
                 else if(j == 1){
@@ -85,7 +85,8 @@ for(var i=0; i<5; i++){
 
                     newCell.onclick = function(){
                         modal.style.display = "block"
-                        displayDate(this)
+                        var dateValues = displayDate(this)
+                        sendDataToJsp(dateValues)
                     }
                 }
                 else if(j == 2){
@@ -93,7 +94,8 @@ for(var i=0; i<5; i++){
 
                     newCell.onclick = function(){
                         modal.style.display = "block"
-                        displayDate(this)
+                        var dateValues = displayDate(this)
+                        sendDataToJsp(dateValues)
                     }
                 }
                 else{
@@ -127,10 +129,18 @@ function sendDataToJsp(dateValues){
     form.appendChild(hiddenFieldMonth);
     form.appendChild(hiddenFieldDay);
     
-    document.body.appendChild(form);
+    //document.body.appendChild(form);
+    var iframe = document.createElement('iframe');
+    iframe.style.display = 'none'; // 화면에 표시되지 않도록 설정
+    iframe.name = 'myFrame'; // iframe에 이름 부여
+
+    document.body.appendChild(iframe);
+    iframe.contentDocument.body.appendChild(form);
+    form.target = 'myFrame'
     form.submit();
 
-    console.log("sendDataTojsp")
+    // 페이지 이동 없이 전달
+   
 }
 
 // 모달창 맨 위에 날짜 나타내는 함수 (onclick에 부여)

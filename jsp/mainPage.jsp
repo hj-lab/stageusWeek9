@@ -41,23 +41,41 @@ if(id == null){
 } 
 // △ 내 정보 표시 관련
 
-// ▽ 모달창 -> 일정 추가 관련
+// ▽ 모달창에서 일정 보이기 관련
+
 List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule");
 
-StringBuilder formattedData = new StringBuilder("[");
+ArrayList<String>modalNameList = new ArrayList<String>();
+ArrayList<String>modalIdList = new ArrayList<String>();
+ArrayList<String>modalHourList = new ArrayList<String>();
+ArrayList<String>modalMinuteList = new ArrayList<String>();
+ArrayList<String>modalContentList = new ArrayList<String>();
 
-// 2차원 배열을 문자열 형태로 변환
-for (List<String> innerList : DayScheduleList) {
-    formattedData.append("[\"");
-    for (String value : innerList) {
-        formattedData.append(value).append("\", \"");
+if (DayScheduleList != null) {
+    for (int i = 0; i < DayScheduleList.size(); i++) {
+        String nameValue = DayScheduleList.get(i).get(0); // DayScheduleList의 각 행의 첫 번째 열 값
+        modalNameList.add("\"" + nameValue + "\""); // 큰따옴표 추가 후 idList에 추가
+
+        String idValue = DayScheduleList.get(i).get(1);
+        modalIdList.add("\"" + idValue + "\"");
+
+        String hourValue = DayScheduleList.get(i).get(2);
+        modalHourList.add("\"" + hourValue + "\"");
+
+        String minuteValue = DayScheduleList.get(i).get(3);
+        modalMinuteList.add("\"" + minuteValue + "\"");
+
+        String contentValue = DayScheduleList.get(i).get(4);
+        modalContentList.add("\"" + contentValue + "\"");
     }
-    formattedData.delete(formattedData.length() - 3, formattedData.length()); // 마지막 쉼표 및 따옴표 제거
-    formattedData.append("], ");
 }
-formattedData.delete(formattedData.length() - 2, formattedData.length()); // 마지막 쉼표 제거
-formattedData.append("]"); // 배열 종료
-%>
+
+System.out.println("modalNameList: " + modalNameList);
+System.out.println("modalIdList: " + modalIdList);
+System.out.println("modalHourList: " + modalHourList);
+System.out.println("modalMinuteList: " + modalMinuteList);
+System.out.println("modalContentList: " + modalContentList);
+   
 
 %>
 
@@ -271,24 +289,46 @@ formattedData.append("]"); // 배열 종료
 
         // △ 내 정보 표시 관련
 
-        // ▽ 모달창 -> 일정 추가시 관련
-    var jsDataList = <%= formattedData.toString() %>
+        // ▽ 모달창에서 일정 목록 보이기 관련
+        // window.onload = function(){
+        // var nameList = <%= modalNameList %>
+        // var idList = <%= modalIdList %>
+        // var hourList = <%= modalHourList %>
+        // var minuteList = <%= modalMinuteList %>
+        // var contentList = <%= modalContentList %>
+        
+        // console.log("nameList : "+nameList)
+        // console.log("idList : "+idList)
+        // console.log("hourList : "+hourList)
+        // }
+      
+        window.addEventListener('DOMContentLoaded', function(){
+            var nameList = <%= modalNameList %>
+            var idList = <%= modalIdList %>
+            var hourList = <%= modalHourList %>
+            var minuteList = <%= modalMinuteList %>
+            var contentList = <%= modalContentList %>
 
-    // console.log("방금 생성한 날짜의 jsDataList : "+jsDataList);
-    // var value = jsDataList[2][0]
-    // console.log("첫번째 요소 "+value)
+            // var modal = document.getElementById("modal")
+            // modal.style.display = "block"
+            
+            console.log("nameList : "+nameList)
+            console.log("idList : "+idList)
+            console.log("hourList : "+hourList)
+	    });
+        
+
     
-
 //     var addModalTime = document.getElementById("addModalTime")
 
-//     for(var i=0; i<jsDataList.length; i++){
+//     for(var i=0; i<nameList.length; i++){
 //             //시간 관련
 //             // △△
 //             var upDiv = document.createElement("div")
 //             upDiv.style.display = 'flex'
 //             upDiv.style.flexDirection = 'row'
 //             upDiv.style.justifyContent = "center"
-           
+        
 //             var hourUpBtn = document.createElement("div")
 //             hourUpBtn.id = "hourUpBtn"
 //             hourUpBtn.className = "triangleTop"
@@ -313,7 +353,7 @@ formattedData.append("]"); // 배열 종료
 //             var hour = document.createElement("input")
 //             hour.type = "text"
 //             hour.className = "addTime"
-//             hour.value = jsDataList[i][2]
+//             hour.value = hourList[i]
 
 //             var dot = document.createElement("div")
 //             dot.innerHTML = ":"
@@ -321,7 +361,7 @@ formattedData.append("]"); // 배열 종료
 //             var minute = document.createElement("input")
 //             minute.type = "text"
 //             minute.className = "addTime"
-//             minute.value = jsDataList[i][3]
+//             minute.value = minuteList[i]
 
 //             timeDiv.appendChild(hour)
 //             timeDiv.appendChild(dot)
@@ -337,18 +377,18 @@ formattedData.append("]"); // 배열 종료
 //             var hourDownBtn = document.createElement("div")
 //             hourDownBtn.id = "hourDownBtn"
 //             hourDownBtn.className = "triangleBottom"
-  
+
 //             var minuteDownBtn = document.createElement("div")
 //             minuteDownBtn.id = "minuteDownBtn"
 //             minuteDownBtn.className = "triangleBottom"
-  
+
 //             downDiv.appendChild(hourDownBtn)
 //             downDiv.appendChild(minuteDownBtn)
 
 //             addModalTime.appendChild(upDiv)
 //             addModalTime.appendChild(timeDiv)
 //             addModalTime.appendChild(downDiv)
-                                          
+                                        
 // }
 
 

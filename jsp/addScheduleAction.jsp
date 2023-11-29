@@ -40,40 +40,15 @@ query.setString(8, scheduleValue);
 //query 전송, 저장 끝
 query.executeUpdate();
 
-// select로 목록 가져오기 -> 이건 display에서 필요할거같은데
-String sql2 = "SELECT * FROM schedule WHERE year=? AND month=? AND day=?";
-PreparedStatement query2 = connect.prepareStatement(sql2);
 
-query2.setString(1, yearValue);
-query2.setString(2, monthValue);
-query2.setString(3, dayValue);
 
-ResultSet result = query2.executeQuery();
-
-//2차원 배열 생성
-List<List<String>> dataList = new ArrayList<>();
-while (result.next()) {
-    // 각 행의 값들을 저장할 List 생성
-    List<String> rowValues = new ArrayList<>();
-
-    // 2, 3, 7, 8, 9 번째 column의 값을 가져와서 리스트에 추가
-    rowValues.add(result.getString(2)); // 2번째 column : name
-    rowValues.add(result.getString(3)); // 3번째 column : id
-    rowValues.add(result.getString(7)); // 7번째 column : hour
-    rowValues.add(result.getString(8)); // 8번째 column : minute
-    rowValues.add(result.getString(9)); // 9번째 column : content
-
-    // 현재 행의 데이터 리스트를 전체 데이터 리스트에 추가
-    dataList.add(rowValues);
-}
-
-// 이름, id, hour, minute, content를 순서대로 담고 있는 2차원 배열
-if (session.getAttribute("sessionDaySchedule") != null) {
+<!-- if (session.getAttribute("sessionDaySchedule") != null) {
     session.removeAttribute("sessionDaySchedule"); // sessionDaySchedule 속성 제거
 }
 session.setAttribute("sessionDaySchedule", dataList);
 
-List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule");
+List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule"); -->
+
 %>
 
 <!DOCTYPE html>
