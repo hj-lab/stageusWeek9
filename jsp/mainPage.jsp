@@ -19,22 +19,40 @@ String department = (String)session.getAttribute("sessionDepartment");
 
 ArrayList<String> idList = new ArrayList<String>();
     idList.add("\""+id+"\"");
-
     
 ArrayList<String> nameList = new ArrayList<String>();
     nameList.add("\""+name+"\"");
-
     
 ArrayList<String> telList = new ArrayList<String>();
     telList.add("\""+tel+"\"");
-
     
 ArrayList<String> rankList = new ArrayList<String>();
     rankList.add("\""+rank+"\"");
-
     
 ArrayList<String> departmentList = new ArrayList<String>();
     departmentList.add("\""+department+"\"");
+
+
+// 팀장일 경우를 대비한 해당 부서의 이름, id 가져오기
+Class.forName("com.mysql.jdbc.Driver");
+Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
+
+String sql = "SELECT id, name, department FROM account";
+PreparedStatement query = connect.prepareStatement(sql);
+
+ResultSet result = query.executeQuery();
+
+
+ArrayList<String> departmentIdList = new ArrayList<String>();
+ArrayList<String> departmentNameList = new ArrayList<String>();
+
+while(result.next()){
+    if( result.getString("department").equals(department)){
+        departmentIdList.add("\""+result.getString("id")+"\"");
+        departmentNameList.add("\""+result.getString("name")+"\"");
+    }
+}
+
 
 if(id == null){
     valid = false;
@@ -226,8 +244,8 @@ if (DayScheduleList != null) {
 
         <!-- 팀장일때만 보이게 처리 (jsp) -->
         <div id="memberListParent">
-            <div id="memberListComment">팀원 list</div>
-            <div>김땡땡 팀원</div>
+            
+            
         </div>
 
         <img src="../img/x.png" id="navCloseBtn" onclick="closeNav()">
@@ -281,6 +299,40 @@ if (DayScheduleList != null) {
         myRank.appendChild(rankDiv)
         myDepartment.appendChild(departmentDiv)
 
+        if(rank == "팀장"){
+             var memberListParent = document.getElementById("memberListParent")
+             var departmentIdList = <%=departmentIdList%>
+             var departmentNameList = <%=departmentNameList%>
+
+             var headerDiv = document.createElement("h4")
+             headerDiv.innerHTML = "팀원 List"
+             memberListParent.appendChild(headerDiv)
+
+             for(var i=0; i<departmentIdList.length; i++){
+                let memberId = departmentIdList[i]
+                let memberName = departmentNameList[i]
+
+                var departmentList = document.createElement("div") // 여기에 onclick 줘서 팀원 일정창으로 넘어가게
+                departmentList.onclick = function() {
+                    window.location.href = "goToMemberPage.jsp?id=" + memberId + "&name=" + memberName;
+                };
+
+                var departmentIdDiv = document.createElement("span")
+                var dot = document.createElement("span")
+                var departmentNameDiv = document.createElement("span")
+                
+                dot.innerHTML = " - "
+                departmentIdDiv.innerHTML = departmentIdList[i]
+                departmentNameDiv.innerHTML = departmentNameList[i]
+
+                departmentList.appendChild(departmentIdDiv)
+                departmentList.appendChild(dot)
+                departmentList.appendChild(departmentNameDiv)
+                
+                memberListParent.appendChild(departmentList)
+             }
+        }
+
         }
 
         // △ 내 정보 표시 관련
@@ -309,9 +361,6 @@ if (DayScheduleList != null) {
             var modalDay = <%= modalDay %>
             
             var scheduleCount = nameList.length
-
-            // var modal = document.getElementById("modal")
-            // modal.style.display = "block"
             
             console.log("nameList : "+nameList)
             console.log("idList : "+idList)
