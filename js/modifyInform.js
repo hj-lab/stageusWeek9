@@ -4,7 +4,9 @@
         }
 
         function checkEvent(event){
-            var id = String(document.getElementById("idValue").value)
+            console.log("check이벤트 실행")
+
+            var id = document.getElementById("idValue")
             var pw = String(document.getElementById("pwValue").value)
             var pwCheck = String(document.getElementById("pwCheckValue").value)
             var name = String(document.getElementById("nameValue").value)
@@ -44,12 +46,16 @@
 
             //id 예외처리 시작
             if(id.search(/\s/) != -1){ // != -1 공백이 있으면 (search = 해당하는 문자가 있으면 첫번쨰값 숫자가져오고 없으면 -1 반환 )
-            alert("id에 공백이 들어가면 안됩니다.")
-            console.log(id.search(/\s/))
-            event.preventDefault()
-            return false //페이지 넘김 막음
-            
+                alert("id에 공백이 들어가면 안됩니다.")
+                console.log(id.search(/\s/))
+                event.preventDefault()
+                return false //페이지 넘김 막음  
             } 
+            else if(id.length = 0){
+                alert("id를 입력하십시오.")
+                event.preventDefault()
+                return false //페이지 넘김 막음
+            }
             else if(id.length < 4 || id.length > 11){
                 alert("id를 4~11자로 입력하십시오.")
                 event.preventDefault()
@@ -60,6 +66,11 @@
             alert("비밀번호에 공백이 들어가면 안됩니다.")
             event.preventDefault();
             return false
+            }
+            else if(pw.length = 0){
+                alert("pw를 입력하십시오.")
+                event.preventDefault()
+                return false //페이지 넘김 막음
             }
             else if(!numberPattern.test(pw) || !charPattern.test(pw) || pw.length<8 || pw.length>15){
             alert("공백 제외 영문자, 숫자 포함 8~15자이어야합니다.")
@@ -79,6 +90,11 @@
             return false //페이지 넘김 막음
             
          } 
+         else if(name.length = 0){
+            alert("이름을 입력하십시오.")
+            event.preventDefault()
+            return false //페이지 넘김 막음
+        }
          else if(name.length <2 || name.length > 30){
             alert("2~30자 이내의 이름을 입력하십시오.")
             event.preventDefault();
@@ -91,6 +107,11 @@
             return false //페이지 넘김 막음
             
          } 
+         else if(tel.length = 0){
+            alert("전화번호를 입력하십시오.")
+            event.preventDefault()
+            return false //페이지 넘김 막음
+        }
          else if(telPattern.test(tel)){
             alert("전화번호에 숫자만 입력하십시오.")
             event.preventDefault();

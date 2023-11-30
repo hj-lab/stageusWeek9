@@ -217,11 +217,11 @@ if (DayScheduleList != null) {
         </div>
 
         <div id="logOutParent">
-            <input type="button" id="logOutBtn" value="로그아웃">
+            <input type="button" id="logOutBtn" value="로그아웃" onclick="location.href='logoutAction.jsp'">
         </div>
 
         <div id="quitParent">
-            <input type="button" id="quitBtn" value="회원 탈퇴">
+            <input type="button" id="quitBtn" value="회원 탈퇴" onclick="location.href='quitPage.jsp'">
         </div>
 
         <!-- 팀장일때만 보이게 처리 (jsp) -->

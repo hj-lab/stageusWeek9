@@ -8,7 +8,6 @@
 <%
 request.setCharacterEncoding("utf-8");
 
-
 String sessionId = (String)session.getAttribute("sessionId");
 String sessionPw = (String)session.getAttribute("sessionPw");
 String sessionName = (String)session.getAttribute("sessionName");
@@ -59,7 +58,7 @@ if(id == null){
 
         <button onclick="history.back()" id="backBtn">이전으로</button>
 
-        <form name="myform" action="modifyInformAction.jsp" id="myform" onsubmit="blankCheck(event)">
+        <form name="myform" action="modifyInformAction.jsp" id="myform" onsubmit="checkEvent(event)">
             <div id="idParent">
                 <span>id : </span>
                 <input type="text" id="idValue" name="id" class="inputBox">
@@ -103,6 +102,7 @@ if(id == null){
         </form>
 
     </div>
+
     <script src="../js/modifyInform.js"></script>
     <script>
         var valid = <%= valid %>
@@ -113,8 +113,13 @@ if(id == null){
         var rank = <%= rank %>
         var department = <%= department %>
 
+        console.log("id : "+id)
+        console.log("pw : "+pw)
+        console.log("name : "+name)
+        
         console.log("tel : "+tel)
         console.log("rank : "+rank)
+
         if(valid == false){
             alert("로그인 하십시오!")
             location.href = "../index.html"
@@ -141,7 +146,6 @@ if(id == null){
                 if(rankDiv[i].value == rank){
                     rankDiv[i].checked = true
                 }
-                console.log("for문")
             }
 
             var departmentDiv = document.getElementsByName("department")
@@ -150,34 +154,86 @@ if(id == null){
                     departmentDiv[i].checked = true
                 }
             }
+
         }
 
 
-        function blankCheck(event){
-            var id = String(document.getElementById("idValue").value)
+        function checkEvent(event){
+            console.log("check이벤트 실행")
+
+            var id = String(document.getElementById("idValue")).value
             var pw = String(document.getElementById("pwValue").value)
+            var pwCheck = String(document.getElementById("pwCheckValue").value)
             var name = String(document.getElementById("nameValue").value)
             var tel = String(document.getElementById("telValue").value)
+      
+            var numberPattern = /[0-9]/g;   //숫자
+            var charPattern = /[a-zA-Z]/g;	 //문자 
+            var blankPattern = /\s/g;  //공백
+            var telPattern = /[^0-9]/g; // 전화번호에 숫자가 아닌 것이 들어갈 경우  
             
-            if(id.length == 0){
-                id = <%= sessionId %>
+            // pw 예외처리
+            if(pw.search(/\s/) != -1){
+            alert("비밀번호에 공백이 들어가면 안됩니다.")
+            event.preventDefault();
+            return false
             }
-            
-            if(pw.length == 0){
-                pw = <%= sessionPw %>
+            else if(pw.length == 0){
+                alert("pw를 입력하십시오.")
+                event.preventDefault()
+                return false //페이지 넘김 막음
             }
-
-            if(name.length == 0){ //전화번호 입력 안할시
-            name = <%= sessionName %> 
-            }
-
-            if(tel.length == 0){
-                tel = <%= sessionTel %>
-            }
-
-            checkEvent(event)
+            else if(!numberPattern.test(pw) || !charPattern.test(pw) || pw.length<8 || pw.length>15){
+            alert("공백 제외 영문자, 숫자 포함 8~15자이어야합니다.")
+            event.preventDefault();
+            return false
+        }
+        else if(pw != pwCheck){
+            alert("비밀번호 확인이 틀렸습니다.")
+            event.preventDefault();
+            return false 
 
         }
+        // 이름 예외처리
+        else if(name.search(/\s/) != -1){ 
+            alert("이름에 공백이 들어가면 안됩니다.")
+            event.preventDefault();
+            return false //페이지 넘김 막음
+            
+         } 
+         else if(name.length == 0){
+            alert("이름을 입력하십시오.")
+            event.preventDefault()
+            return false //페이지 넘김 막음
+        }
+         else if(name.length <2 || name.length > 30){
+            alert("2~30자 이내의 이름을 입력하십시오.")
+            event.preventDefault();
+            return false
+         }
+         //전화번호 예외
+         else if(tel.search(/\s/) != -1){ 
+            alert("전화번호에 공백이 들어가면 안됩니다.")
+            event.preventDefault();
+            return false //페이지 넘김 막음
+            
+         } 
+         else if(tel.length == 0){
+            alert("전화번호를 입력하십시오.")
+            event.preventDefault()
+            return false //페이지 넘김 막음
+        }
+         else if(telPattern.test(tel)){
+            alert("전화번호에 숫자만 입력하십시오.")
+            event.preventDefault();
+            return false
+         }
+        else{ //이상이 없을 시에
+            console.log("성공함")
+            document.myform.onsubmit
+            return true
+        }
+    }
 
     </script>
 </body>
