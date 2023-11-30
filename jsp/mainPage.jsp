@@ -44,6 +44,9 @@ if(id == null){
 // ▽ 모달창에서 일정 보이기 관련
 
 List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule");
+String modalYear = (String)session.getAttribute("sessionModalYear");
+String modalMonth = (String)session.getAttribute("sessionModalMonth");
+String modalDay = (String)session.getAttribute("sessionModalDay");
 
 ArrayList<String>modalNameList = new ArrayList<String>();
 ArrayList<String>modalIdList = new ArrayList<String>();
@@ -69,13 +72,6 @@ if (DayScheduleList != null) {
         modalContentList.add("\"" + contentValue + "\"");
     }
 }
-
-System.out.println("modalNameList: " + modalNameList);
-System.out.println("modalIdList: " + modalIdList);
-System.out.println("modalHourList: " + modalHourList);
-System.out.println("modalMinuteList: " + modalMinuteList);
-System.out.println("modalContentList: " + modalContentList);
-   
 
 %>
 
@@ -302,12 +298,17 @@ System.out.println("modalContentList: " + modalContentList);
         // console.log("hourList : "+hourList)
         // }
       
-        window.addEventListener('DOMContentLoaded', function(){
+        //window.addEventListener('DOMContentLoaded', function(){
             var nameList = <%= modalNameList %>
             var idList = <%= modalIdList %>
             var hourList = <%= modalHourList %>
             var minuteList = <%= modalMinuteList %>
             var contentList = <%= modalContentList %>
+            var modalYear = <%= modalYear %>
+            var modalMonth = <%= modalMonth %>
+            var modalDay = <%= modalDay %>
+            
+            var scheduleCount = nameList.length
 
             // var modal = document.getElementById("modal")
             // modal.style.display = "block"
@@ -315,7 +316,11 @@ System.out.println("modalContentList: " + modalContentList);
             console.log("nameList : "+nameList)
             console.log("idList : "+idList)
             console.log("hourList : "+hourList)
-	    });
+            console.log("yearList : "+modalYear)
+            console.log("monthList : "+modalMonth)
+            console.log("dayList : "+modalDay)
+
+	   // });
         
 
     

@@ -61,6 +61,7 @@ for(var i=0; i<5; i++){
 
             if(i<4){
                 newCell.innerHTML = i*7 + (j+1)
+                newCell.id = "day"+(i+1)
 
                 newCell.onclick = function(){
                     modal.style.display = "block"
@@ -103,41 +104,46 @@ for(var i=0; i<5; i++){
                 }
             }
         } 
+
+        
 }
 
 function sendDataToJsp(dateValues){
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
     form.setAttribute('action', 'displayScheduleAction.jsp'); // 데이터를 전달할 JSP 페이지
+    //////////// 원래 displayScheduleAction.jsp
 
     var hiddenFieldYear = document.createElement('input');
     hiddenFieldYear.setAttribute('type', 'hidden');
-    hiddenFieldYear.setAttribute('name', "year");
-    hiddenFieldYear.setAttribute('value', dateValues.year); // 전달할 데이터의 이름 설정
+    hiddenFieldYear.setAttribute('name', "year");// 전달할 데이터의 이름 설정
+    hiddenFieldYear.setAttribute('value', dateValues.year); 
     
     var hiddenFieldMonth = document.createElement('input');
     hiddenFieldMonth.setAttribute('type', 'hidden');
     hiddenFieldMonth.setAttribute('name', "month");
-    hiddenFieldMonth.setAttribute('value', dateValues.month); // 전달할 데이터의 이름 설정
+    hiddenFieldMonth.setAttribute('value', dateValues.month); 
     
     var hiddenFieldDay = document.createElement('input');
     hiddenFieldDay.setAttribute('type', 'hidden');
     hiddenFieldDay.setAttribute('name', "day");
-    hiddenFieldDay.setAttribute('value', dateValues.day); // 전달할 데이터의 이름 설정
+    hiddenFieldDay.setAttribute('value', dateValues.day); 
     
     form.appendChild(hiddenFieldYear);
     form.appendChild(hiddenFieldMonth);
     form.appendChild(hiddenFieldDay);
     
     //document.body.appendChild(form);
-    var iframe = document.createElement('iframe');
-    iframe.style.display = 'none'; // 화면에 표시되지 않도록 설정
-    iframe.name = 'myFrame'; // iframe에 이름 부여
+    // var iframe = document.createElement('iframe');
+    // iframe.style.display = 'none'; // 화면에 표시되지 않도록 설정
+    // iframe.name = 'myFrame'; // iframe에 이름 부여
 
-    document.body.appendChild(iframe);
-    iframe.contentDocument.body.appendChild(form);
-    form.target = 'myFrame'
+    document.body.appendChild(form);
+    // iframe.contentDocument.body.appendChild(form);
+    // form.target = 'myFrame'
     form.submit();
+
+    //location.reload()
 
     // 페이지 이동 없이 전달
    

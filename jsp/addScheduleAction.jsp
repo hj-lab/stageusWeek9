@@ -40,15 +40,6 @@ query.setString(8, scheduleValue);
 //query 전송, 저장 끝
 query.executeUpdate();
 
-
-
-<!-- if (session.getAttribute("sessionDaySchedule") != null) {
-    session.removeAttribute("sessionDaySchedule"); // sessionDaySchedule 속성 제거
-}
-session.setAttribute("sessionDaySchedule", dataList);
-
-List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule"); -->
-
 %>
 
 <!DOCTYPE html>

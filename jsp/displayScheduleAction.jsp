@@ -31,7 +31,7 @@ while (result.next()) {
     // 각 행의 값들을 저장할 List 생성
     List<String> rowValues = new ArrayList<>();
 
-    // 2, 3, 7, 8, 9 번째 column의 값을 가져와서 리스트에 추가
+    // column의 값을 가져와서 리스트에 추가
     rowValues.add(result.getString(2)); // name
     rowValues.add(result.getString(3)); // id
     rowValues.add(result.getString(7)); // hour
@@ -48,6 +48,21 @@ if (session.getAttribute("sessionDaySchedule") != null) {
 }
 session.setAttribute("sessionDaySchedule", dataList);
 
+if (session.getAttribute("sessionModalYear") != null) {
+    session.removeAttribute("sessionModalYear"); // sessionDaySchedule 속성 제거
+}
+session.setAttribute("sessionModalYear", yearValue);
+
+if (session.getAttribute("sessionModalMonth") != null) {
+    session.removeAttribute("sessionModalMonth"); // sessionDaySchedule 속성 제거
+}
+session.setAttribute("sessionModalMonth", monthValue);
+
+if (session.getAttribute("sessionModalDay") != null) {
+    session.removeAttribute("sessionModalDay"); // sessionDaySchedule 속성 제거
+}
+session.setAttribute("sessionModalDay", dayValue);
+
 
 %>
 
@@ -60,11 +75,14 @@ session.setAttribute("sessionDaySchedule", dataList);
 </head>
 <body>
     <script>
-   //location.href = document.referrer
-   location.reload(true)
-   //window.history.back()
-    
-   
+  // location.href = document.referrer
+   console.log("이동")
+//    location.reload(true)
+// location.reload()   
+ //window.history.back(-2)
+    window.location = document.referrer;
+    //history.go(-1);
+    // location.reload()
     
     </script>
     
