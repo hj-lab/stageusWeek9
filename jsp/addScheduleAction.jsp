@@ -22,6 +22,17 @@ String scheduleValue = request.getParameter("addScheduleName");
 String idValue = (String)session.getAttribute("sessionId");
 String nameValue = (String)session.getAttribute("sessionName");
 
+if (session.getAttribute("sessionModalHour") != null) {
+    session.removeAttribute("sessionModalHour"); 
+}
+session.setAttribute("sessionModalHour", hourValue);
+
+if (session.getAttribute("sessionModalMinute") != null) {
+    session.removeAttribute("sessionModalMinute"); 
+}
+session.setAttribute("sessionModalMinute", minuteValue);
+
+
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 //일정 목록 저장

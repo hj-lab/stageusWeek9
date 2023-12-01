@@ -19,16 +19,12 @@ String department = (String)session.getAttribute("sessionDepartment");
 
 ArrayList<String> idList = new ArrayList<String>();
     idList.add("\""+id+"\"");
-    
 ArrayList<String> nameList = new ArrayList<String>();
     nameList.add("\""+name+"\"");
-    
 ArrayList<String> telList = new ArrayList<String>();
-    telList.add("\""+tel+"\"");
-    
+    telList.add("\""+tel+"\""); 
 ArrayList<String> rankList = new ArrayList<String>();
-    rankList.add("\""+rank+"\"");
-    
+    rankList.add("\""+rank+"\"");  
 ArrayList<String> departmentList = new ArrayList<String>();
     departmentList.add("\""+department+"\"");
 
@@ -42,7 +38,6 @@ PreparedStatement query = connect.prepareStatement(sql);
 
 ResultSet result = query.executeQuery();
 
-
 ArrayList<String> departmentIdList = new ArrayList<String>();
 ArrayList<String> departmentNameList = new ArrayList<String>();
 
@@ -53,7 +48,7 @@ while(result.next()){
     }
 }
 
-
+// id 세션 확인
 if(id == null){
     valid = false;
 } 
@@ -74,8 +69,8 @@ ArrayList<String>modalContentList = new ArrayList<String>();
 
 if (DayScheduleList != null) {
     for (int i = 0; i < DayScheduleList.size(); i++) {
-        String nameValue = DayScheduleList.get(i).get(0); // DayScheduleList의 각 행의 첫 번째 열 값
-        modalNameList.add("\"" + nameValue + "\""); // 큰따옴표 추가 후 idList에 추가
+        String nameValue = DayScheduleList.get(i).get(0); // DayScheduleList의 각 행의 첫 번째 열 값 - name
+        modalNameList.add("\"" + nameValue + "\"");
 
         String idValue = DayScheduleList.get(i).get(1);
         modalIdList.add("\"" + idValue + "\"");
@@ -148,7 +143,7 @@ if (DayScheduleList != null) {
                         <!-- 그리고 이 칸에 스크롤 기능 넣기 !!-->
 
                         <!-- 이 버튼은 평소에 안보이게-->
-                         <div id="addModalTime"> 
+                         <!-- <div id="addModalTime"> 
                             <div id="hideUpBtn">
                                 <div class="triangleTop" id="hourUpBtn" onclick="hourUp()"></div>
                                 <div class="triangleTop"  id="minuteUpBtn" onclick="minuteUp()"></div>
@@ -164,17 +159,17 @@ if (DayScheduleList != null) {
                                 <div class="triangleBottom" id="hourDownBtn" onclick="hourDown()"></div>
                                 <div class="triangleBottom" id="minuteDownBtn" onclick="minuteDown()"></div>                        
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div id="addModalSchedule">
-                            <!-- <form id="modalSchedule" onsubmit="return false">
+                        <!-- <div id="addModalSchedule">
+                            <form id="modalSchedule" onsubmit="return false">
                                 <input type="text" class="modalScheduleComment" id="comment1" value="기획서 작성" disabled>
                                 <div>
                                     <input type="submit" class="scheduleBtn" value="수정" onclick="modifySchedule();"> 
                                     <input type="button" class="scheduleBtn" value="삭제"> 
                                 </div>
-                            </form> -->
-                        </div>    
+                            </form>
+                        </div>     -->
 
                     </div>
 
@@ -257,6 +252,7 @@ if (DayScheduleList != null) {
 
     <script>
         // ▽ 내 정보 표시 관련
+
         var valid = <%= valid %>
         var id = <%= idList %>
         var name = <%= nameList %>
@@ -338,18 +334,6 @@ if (DayScheduleList != null) {
         // △ 내 정보 표시 관련
 
         // ▽ 모달창에서 일정 목록 보이기 관련
-        // window.onload = function(){
-        // var nameList = <%= modalNameList %>
-        // var idList = <%= modalIdList %>
-        // var hourList = <%= modalHourList %>
-        // var minuteList = <%= modalMinuteList %>
-        // var contentList = <%= modalContentList %>
-        
-        // console.log("nameList : "+nameList)
-        // console.log("idList : "+idList)
-        // console.log("hourList : "+hourList)
-        // }
-      
         //window.addEventListener('DOMContentLoaded', function(){
             var nameList = <%= modalNameList %>
             var idList = <%= modalIdList %>
@@ -372,78 +356,131 @@ if (DayScheduleList != null) {
 	   // });
         
 
-    
-//     var addModalTime = document.getElementById("addModalTime")
+    // 일정 목록 출력 관련
+     var addModalTime = document.getElementById("addModalTime")
+     var addModalSchedule = document.getElementById("addModalSchedule")
+     var modalScheduleBox = document.getElementById("modalScheduleBox")
 
-//     for(var i=0; i<nameList.length; i++){
-//             //시간 관련
-//             // △△
-//             var upDiv = document.createElement("div")
-//             upDiv.style.display = 'flex'
-//             upDiv.style.flexDirection = 'row'
-//             upDiv.style.justifyContent = "center"
-        
-//             var hourUpBtn = document.createElement("div")
-//             hourUpBtn.id = "hourUpBtn"
-//             hourUpBtn.className = "triangleTop"
+     for(var i=0; i<nameList.length; i++){
+             //시간 관련
+             // △△
+            var modalTime = document.createElement("div")
+            modalTime.id = "addModalTime"
 
-//             var minuteUpBtn = document.createElement("div")
-//             minuteUpBtn.id = "minuteUpBtn"
-//             minuteUpBtn.className = "triangleTop"
-            
-//             upDiv.appendChild(hourUpBtn)
-//             upDiv.appendChild(minuteUpBtn)
-//             //
+             var upDiv = document.createElement("div")
+             upDiv.style.display = 'flex'
+             upDiv.style.flexDirection = 'row'
+             upDiv.style.justifyContent = "center"
+      
+             var hourUpBtn = document.createElement("div")
+             hourUpBtn.id = "hourUpBtn"
+             hourUpBtn.className = "triangleTop"
 
-//             // ㅁ:ㅁ
-//             var timeDiv = document.createElement("div")
-//             timeDiv.style.display = "flex"
-//             timeDiv.style.flexDirection = "row"
-//             timeDiv.style.textAlign = "center"
-//             timeDiv.style.justifyContent = "center"
-//             timeDiv.style.border = "2px solid orange"
-//             timeDiv.style.borderRadius = "10px"
+             var minuteUpBtn = document.createElement("div")
+             minuteUpBtn.id = "minuteUpBtn"
+             minuteUpBtn.className = "triangleTop"
+          
+             upDiv.appendChild(hourUpBtn)
+             upDiv.appendChild(minuteUpBtn)
+             //
+             // ㅁ:ㅁ
+             var timeDiv = document.createElement("div")
+             timeDiv.style.display = "flex"
+             timeDiv.style.flexDirection = "row"
+             timeDiv.style.textAlign = "center"
+             timeDiv.style.justifyContent = "center"
+             timeDiv.style.border = "2px solid orange"
+             timeDiv.style.borderRadius = "10px"
+             var hour = document.createElement("input")
+             hour.type = "text"
+             hour.className = "addTime"
+             hour.value = hourList[i]
 
-//             var hour = document.createElement("input")
-//             hour.type = "text"
-//             hour.className = "addTime"
-//             hour.value = hourList[i]
+             var dot = document.createElement("div")
+             dot.innerHTML = ":"
 
-//             var dot = document.createElement("div")
-//             dot.innerHTML = ":"
+             var minute = document.createElement("input")
+             minute.type = "text"
+             minute.className = "addTime"
+             minute.value = minuteList[i]
 
-//             var minute = document.createElement("input")
-//             minute.type = "text"
-//             minute.className = "addTime"
-//             minute.value = minuteList[i]
+             timeDiv.appendChild(hour)
+             timeDiv.appendChild(dot)
+             timeDiv.appendChild(minute)
+             //
 
-//             timeDiv.appendChild(hour)
-//             timeDiv.appendChild(dot)
-//             timeDiv.appendChild(minute)
-//             //
+             //▽▽
+             var downDiv = document.createElement("div")
+             downDiv.style.display = 'flex'
+             downDiv.style.flexDirection = 'row'
+             downDiv.style.justifyContent = "center"
 
-//             //▽▽
-//             var downDiv = document.createElement("div")
-//             downDiv.style.display = 'flex'
-//             downDiv.style.flexDirection = 'row'
-//             downDiv.style.justifyContent = "center"
+             var hourDownBtn = document.createElement("div")
+             hourDownBtn.id = "hourDownBtn"
+             hourDownBtn.className = "triangleBottom"
 
-//             var hourDownBtn = document.createElement("div")
-//             hourDownBtn.id = "hourDownBtn"
-//             hourDownBtn.className = "triangleBottom"
+             var minuteDownBtn = document.createElement("div")
+             minuteDownBtn.id = "minuteDownBtn"
+             minuteDownBtn.className = "triangleBottom"
 
-//             var minuteDownBtn = document.createElement("div")
-//             minuteDownBtn.id = "minuteDownBtn"
-//             minuteDownBtn.className = "triangleBottom"
+             downDiv.appendChild(hourDownBtn)
+             downDiv.appendChild(minuteDownBtn)
 
-//             downDiv.appendChild(hourDownBtn)
-//             downDiv.appendChild(minuteDownBtn)
+            //  addModalTime.appendChild(upDiv)
+            //  addModalTime.appendChild(timeDiv)
+            //  addModalTime.appendChild(downDiv)
 
-//             addModalTime.appendChild(upDiv)
-//             addModalTime.appendChild(timeDiv)
-//             addModalTime.appendChild(downDiv)
-                                        
-// }
+            modalTime.appendChild(upDiv)
+            modalTime.appendChild(timeDiv)
+            modalTime.appendChild(downDiv)
+                                   
+             
+             // ▽ 일정 목록
+            var modalScheduleList = document.createElement("div")
+            modalScheduleList.id= "addModalSchedule"
+
+             var scheduleDiv = document.createElement("div")
+             scheduleDiv.style.display = "flex"
+             scheduleDiv.style.flexDirection = "row"
+             scheduleDiv.style.justifyContent = "center"
+             scheduleDiv.style.border = "2px solid orange"
+             scheduleDiv.style.borderRadius = "10px"
+
+             var scheduleText = document.createElement("input")
+             scheduleText.type = "text"
+             scheduleText.value = contentList[i]
+             scheduleText.disabled = true
+
+             var modifyBtn = document.createElement("input")
+             modifyBtn.type = "button"
+             modifyBtn.class ="scheduleBtn"
+             modifyBtn.value = "수정"
+             modifyBtn.onclick = function(){
+                modifySchedule(this)
+             }
+             
+             var deleteBtn = document.createElement("input")
+             deleteBtn.type = "button"
+             deleteBtn.class = "scheduleBtn"
+             deleteBtn.value = "삭제"
+
+             scheduleDiv.appendChild(scheduleText)
+             scheduleDiv.appendChild(modifyBtn)
+             scheduleDiv.appendChild(deleteBtn)
+
+             //addModalSchedule.appendChild(scheduleDiv)
+             modalScheduleList.appendChild(scheduleDiv)
+
+             var listOneParent = document.createElement("div")
+             listOneParent.style.display = "flex"
+             listOneParent.style.flexDirection = "row"
+
+             listOneParent.appendChild(modalTime)
+             listOneParent.appendChild(modalScheduleList)
+
+            modalScheduleBox.appendChild(listOneParent)
+
+ }
 
 
 

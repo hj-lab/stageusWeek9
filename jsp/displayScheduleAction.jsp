@@ -7,6 +7,7 @@
 <%@ page import="java.util.List" %>
 
 <%
+// 클릭한 날짜 가져오기
 String yearValue = request.getParameter("year");
 String monthValue = request.getParameter("month");
 String dayValue = request.getParameter("day");
@@ -42,12 +43,13 @@ while (result.next()) {
     dataList.add(rowValues);
 }
 
-
+// 세션에 등록 - 2차원 배열로 (name, id, hour, minute, content)
 if (session.getAttribute("sessionDaySchedule") != null) {
     session.removeAttribute("sessionDaySchedule"); // sessionDaySchedule 속성 제거
 }
 session.setAttribute("sessionDaySchedule", dataList);
 
+// 클릭한 요소 년, 월, 일 저장
 if (session.getAttribute("sessionModalYear") != null) {
     session.removeAttribute("sessionModalYear"); // sessionDaySchedule 속성 제거
 }
@@ -62,7 +64,7 @@ if (session.getAttribute("sessionModalDay") != null) {
     session.removeAttribute("sessionModalDay"); // sessionDaySchedule 속성 제거
 }
 session.setAttribute("sessionModalDay", dayValue);
-
+   
 
 %>
 
@@ -78,9 +80,9 @@ session.setAttribute("sessionModalDay", dayValue);
   // location.href = document.referrer
    console.log("이동")
 //    location.reload(true)
-// location.reload()   
- //window.history.back(-2)
-    window.location = document.referrer;
+    window.history.back(-1)
+    // location.reload() 
+    //window.location = document.referrer;
     //history.go(-1);
     // location.reload()
     

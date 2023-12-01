@@ -112,7 +112,6 @@ function sendDataToJsp(dateValues){
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
     form.setAttribute('action', 'displayScheduleAction.jsp'); // 데이터를 전달할 JSP 페이지
-    //////////// 원래 displayScheduleAction.jsp
 
     var hiddenFieldYear = document.createElement('input');
     hiddenFieldYear.setAttribute('type', 'hidden');
@@ -133,15 +132,19 @@ function sendDataToJsp(dateValues){
     form.appendChild(hiddenFieldMonth);
     form.appendChild(hiddenFieldDay);
     
-    //document.body.appendChild(form);
+    document.body.appendChild(form);
     // var iframe = document.createElement('iframe');
     // iframe.style.display = 'none'; // 화면에 표시되지 않도록 설정
     // iframe.name = 'myFrame'; // iframe에 이름 부여
 
-    document.body.appendChild(form);
+    // document.body.appendChild(iframe);
+
     // iframe.contentDocument.body.appendChild(form);
     // form.target = 'myFrame'
+
     form.submit();
+
+    // iframe.src = iframe.src;
 
     //location.reload()
 
@@ -231,26 +234,38 @@ function monthfunc(id){ //현재 페이지 month 출력함수
 }
 
 
-function modifySchedule(){ // 수정 버튼 누를시
-    if(document.getElementById('comment1').disabled == true){
-        document.getElementById('comment1').removeAttribute("disabled");   
+function modifySchedule(myvalue){ // 수정 버튼 누를시
+    // visible 상태일때 클릭하면 form 제출 jsp 로 넘어가도록 하자
 
-        // disabled = false가됨 = 수정할 수 있는 상태
-        console.log("modify 실행 ");
+    // 이전 형제 요소인 input type="text" 가져옴
+    // 얘네 jsp로 보내기
+    var siblingInput = myvalue.previousElementSibling 
+    var siblingInputValue = siblingInput.value
 
-        document.getElementById("hideUpBtn").style.visibility = "visible";
-         document.getElementById("hideDownBtn").style.visibility = "visible";
-   
+    console.log("siblinginputvalue는 "+siblingInputValue)
+
+    if(siblingInput.disabled == true){
+        siblingInput.removeAttribute("disabled");   
+
+        // document.getElementById("hideUpBtn").style.visibility = "visible";
+        //  document.getElementById("hideDownBtn").style.visibility = "visible";
+        siblingInput.style.visibility ="visible";
     }
-    else if(document.getElementById('comment1').disabled == false){
-        document.getElementById('comment1').setAttribute('disabled',true);
+    else if(siblingInput.disabled == false){
+        siblingInput.setAttribute('disabled',true);
+
+        //var siblingInputAfter = myvalue.previousElementSibling.value
 
         //disable = true가됨 = 수정불가 상태
         console.log("block 실행");
 
-        document.getElementById("hideUpBtn").style.visibility = "hidden";
-         document.getElementById("hideDownBtn").style.visibility = "hidden";
+        // 닫을때 실행
+        location.href = 'modifyScheduleAction.jsp?modifySchedule='+siblingInputValue
+
+        // document.getElementById("hideUpBtn").style.visibility = "hidden";
+        //  document.getElementById("hideDownBtn").style.visibility = "hidden";
     }
+
     
 }
 
