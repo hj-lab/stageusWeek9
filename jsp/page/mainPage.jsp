@@ -463,6 +463,9 @@ if (DayScheduleList != null) {
              deleteBtn.type = "button"
              deleteBtn.class = "scheduleBtn"
              deleteBtn.value = "삭제"
+             deleteBtn.onclick = function(){
+                deleteSchedule(this)
+             }
 
              scheduleDiv.appendChild(scheduleText)
              scheduleDiv.appendChild(modifyBtn)

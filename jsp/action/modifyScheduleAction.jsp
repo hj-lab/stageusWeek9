@@ -12,8 +12,8 @@ request.setCharacterEncoding("utf-8");
 // 수정할 일정의 내용
 String modifySchedule = request.getParameter("modifySchedule");
 
-ArrayList<String>id = new ArrayList<String>();
-    id.add("\""+modifySchedule+"\"");
+//ArrayList<String>id = new ArrayList<String>();
+//    id.add("\""+modifySchedule+"\"");
 
 
 String sessionId = (String)session.getAttribute("sessionId");
@@ -23,8 +23,8 @@ String sessionModalDay = (String)session.getAttribute("sessionModalDay"); //현�
 String sessionModalHour = (String)session.getAttribute("sessionModalHour");
 String sessionModalMinute = (String)session.getAttribute("sessionModalMinute");
 
-ArrayList<String>hour = new ArrayList<String>();
-    hour.add("\""+sessionModalHour+"\"");
+//ArrayList<String>hour = new ArrayList<String>();
+//    hour.add("\""+sessionModalHour+"\"");
 
 boolean valid = true;
 
@@ -62,9 +62,7 @@ query.executeUpdate();
 </head>
 <body>
     <script>
-        var check = <%= id %>
-        var hour = <%= hour %>
-        alert("넘어온 sibling은 "+check+"넘어온 hour은 "+hour)
+        
         window.history.back();
     </script> 
 </body>

@@ -246,22 +246,16 @@ function modifySchedule(myvalue){ // 수정 버튼 누를시
 
     if(siblingInput.disabled == true){
         siblingInput.removeAttribute("disabled");   
-
         // document.getElementById("hideUpBtn").style.visibility = "visible";
         //  document.getElementById("hideDownBtn").style.visibility = "visible";
         siblingInput.style.visibility ="visible";
     }
     else if(siblingInput.disabled == false){
         siblingInput.setAttribute('disabled',true);
-
-        //var siblingInputAfter = myvalue.previousElementSibling.value
-
         //disable = true가됨 = 수정불가 상태
         console.log("block 실행");
-
         // 닫을때 실행
         location.href = 'modifyScheduleAction.jsp?modifySchedule='+siblingInputValue
-
         // document.getElementById("hideUpBtn").style.visibility = "hidden";
         //  document.getElementById("hideDownBtn").style.visibility = "hidden";
     }
@@ -269,6 +263,13 @@ function modifySchedule(myvalue){ // 수정 버튼 누를시
     
 }
 
+
+function deleteSchedule(myvalue){
+    var siblingInput = myvalue.previousElementSibling.previousElementSibling // 2개전으로 바꿔야함 ! 이전 요소는 수정 버튼임
+    var siblingInputValue = siblingInput.value
+
+    location.href = 'deleteScheduleAction.jsp?deleteSchedule='+siblingInputValue
+}
 
 function hourUp(){
     var hour = document.getElementById("addHour");

@@ -6,9 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link type="text/css" rel="stylesheet" href="../css/signUp.css">
-    <link type="text/css" rel="stylesheet" href="../css/common.css">
-    <link type="text/css" rel="stylesheet" href="../css/public.css">
+    <link type="text/css" rel="stylesheet" href="../../css/signUp.css">
+    <link type="text/css" rel="stylesheet" href="../../css/common.css">
+    <link type="text/css" rel="stylesheet" href="../../css/public.css">
 </head>
 <body>
     <div id="backParent">
@@ -16,7 +16,7 @@
         <button onclick="history.back()" id="backBtn">이전으로</button>
 
 
-        <form name="myform" action="signUpAction.jsp" id="myform" onsubmit="checkEvent(event)">
+        <form name="myform" action="../action/signUpAction.jsp" id="myform" onsubmit="checkEvent(event)">
             <div id="idParent">
                 <input type="text" name="id" id="idValue" class="inputBox" placeholder="id 입력 / 4~11자">
                 <input type="button" id="duplicateBtn" value="중복확인" onclick="idCheckEvent()">
@@ -29,20 +29,20 @@
             <div id="rankParent">
                 <div id="Btn">직급</div>
                 <div>
-                    <input type="radio" name="rank" id="radioBtn" value="팀장">팀장
+                    <input type="radio" name="rank" id="radioBtn" value="1">팀장
                 </div>
                 <div>
-                    <input type="radio" name="rank" id="radioBtn" value="팀원">팀원
+                    <input type="radio" name="rank" id="radioBtn" value="2">팀원
                 </div>
             </div>
             
              <div id="departmentParent">
                 <div id="Btn">부서</div>
                 <div>
-                    <input type="radio" name="department" id="radioBtn" value="개발팀">개발팀
+                    <input type="radio" name="department" id="radioBtn" value="1">개발팀
                 </div>
                 <div>
-                    <input type="radio" name="department" id="radioBtn" value="디자인팀">디자인팀
+                    <input type="radio" name="department" id="radioBtn" value="2">디자인팀
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
 
     <script>
         function idCheckEvent(){
-            window.open("idCheckAction.jsp", "idCheck", "width=500 height=200")
+            window.open("../action/idCheckAction.jsp", "idCheck", "width=500 height=200")
         }
 
         function checkEvent(event){
@@ -70,9 +70,6 @@
             var departmentCount = department.length
             var rankValid = 0
             var departmentValid = 0
-
-            console.log(rank)
-
       
             var numberPattern = /[0-9]/g;   //숫자
             var charPattern = /[a-zA-Z]/g;	 //문자 
