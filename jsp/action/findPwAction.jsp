@@ -12,6 +12,12 @@ String idValue = request.getParameter("id");
 String nameValue = request.getParameter("name");
 String telValue = request.getParameter("tel");
 
+boolean valid = false;
+String yourPw = null;
+
+ArrayList<String> pwList = new ArrayList<String>();
+
+try{
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
@@ -20,10 +26,6 @@ PreparedStatement query = connect.prepareStatement(sql);
 
 ResultSet result = query.executeQuery();
 
-boolean valid = false;
-
-String yourPw = null;
-
 while(result.next()){
     if( result.getString(2).equals(idValue) && result.getString(4).equals(nameValue) && result.getString(5).equals(telValue) ){
         yourPw = result.getString(3);
@@ -31,9 +33,11 @@ while(result.next()){
     }
 }
 
-ArrayList<String> pwList = new ArrayList<String>();
 pwList.add("\""+yourPw+"\"");
 
+}catch(Exception e){
+    e.printStackTrace(); 
+}
 
 %>
 
@@ -54,11 +58,11 @@ pwList.add("\""+yourPw+"\"");
 
             if(valid == false){
                 alert("존재하는 정보가 없습니다.")
-                location.href = "../index.html"
+                location.href = "../../index.html"
             }
             else{
                 alert("당신의 pw는 "+mypw+" 입니다.")
-                location.href = "../index.html"
+                location.href = "../../index.html"
             }
         </script>
     </div>

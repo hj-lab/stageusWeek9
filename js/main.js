@@ -23,6 +23,7 @@ closeModalBtn.onclick = function(){
 };
 
 // 1~12월 버튼 생성
+// 버튼 클릭시 바뀐 월 session에 저장하기
 for(i=1; i<13; i++){ 
     var newBtn = document.createElement("INPUT");
     newBtn.setAttribute("type", "button");
@@ -173,18 +174,6 @@ function displayDate(id){
         month : month,
         day : day
     }
-}
-// 년도 조절 함수 (좌,우 버튼)
-function yearDown(){ 
-    var year = document.getElementById("year");
-    var yearValue = document.getElementById("year").value;
-    year.value = parseInt(yearValue) - 1;
-}
-
-function yearUp(){
-    var year = document.getElementById("year");
-    var yearValue = document.getElementById("year").value;
-    year.value = parseInt(yearValue) + 1;
 }
 
 // 월 버튼을 클릭했을때 month1 형식으로 인자 전달 (id자리에)

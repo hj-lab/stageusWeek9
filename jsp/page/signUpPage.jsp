@@ -54,7 +54,28 @@
 
     <script>
         function idCheckEvent(){
+            var id = String(document.getElementById("idValue").value)
+
+            if(id.search(/\s/) != -1){ // != -1 공백이 있으면 (search = 해당하는 문자가 있으면 첫번쨰값 숫자가져오고 없으면 -1 반환 )
+            alert("id에 공백이 들어가면 안됩니다.")
+            console.log(id.search(/\s/))
+            event.preventDefault()
+            return false //페이지 넘김 막음
+            
+            } 
+            else if(id.length == 0){ // id를 입력하지 않을 경우
+                alert("id를 입력하십시오.")
+                event.preventDefault()
+                return false
+            }
+            else if(id.length < 4 || id.length > 11){
+                alert("id를 4~11자로 입력하십시오.")
+                event.preventDefault()
+                return false
+            }
+            else{
             window.open("../action/idCheckAction.jsp", "idCheck", "width=500 height=200")
+            }
         }
 
         function checkEvent(event){

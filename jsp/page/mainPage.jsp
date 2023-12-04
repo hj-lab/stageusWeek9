@@ -5,87 +5,73 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="java.util.Calendar" %>
+
 
 <%
 request.setCharacterEncoding("utf-8");
 
-// 내 정보 표시 
-boolean valid = true;
-String id = (String)session.getAttribute("sessionId");
-String name = (String)session.getAttribute("sessionName");
-String tel = (String)session.getAttribute("sessionTel");
-String rank = (String)session.getAttribute("sessionRank");
-String department = (String)session.getAttribute("sessionDepartment");
-
 ArrayList<String> idList = new ArrayList<String>();
-    idList.add("\""+id+"\"");
 ArrayList<String> nameList = new ArrayList<String>();
-    nameList.add("\""+name+"\"");
 ArrayList<String> telList = new ArrayList<String>();
-    telList.add("\""+tel+"\""); 
 ArrayList<String> rankList = new ArrayList<String>();
-    rankList.add("\""+rank+"\"");  
 ArrayList<String> departmentList = new ArrayList<String>();
-    departmentList.add("\""+department+"\"");
-
-
-// 팀장일 경우를 대비한 해당 부서의 이름, id 가져오기
-Class.forName("com.mysql.jdbc.Driver");
-Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
-
-String sql = "SELECT id, name, department FROM account";
-PreparedStatement query = connect.prepareStatement(sql);
-
-ResultSet result = query.executeQuery();
-
+//팀장일때 필요한 목록들
 ArrayList<String> departmentIdList = new ArrayList<String>();
 ArrayList<String> departmentNameList = new ArrayList<String>();
 
-while(result.next()){
-    if( result.getString("department").equals(department)){
-        departmentIdList.add("\""+result.getString("id")+"\"");
-        departmentNameList.add("\""+result.getString("name")+"\"");
-    }
-}
+int nowYear = 0;
+int nowMonth = 0;
 
-// id 세션 확인
+boolean valid = true;
+String id = (String)session.getAttribute("sessionId");
+
 if(id == null){
     valid = false;
 } 
-// △ 내 정보 표시 관련
+else{
+    // 내 정보 표시 
+    String name = (String)session.getAttribute("sessionName");
+    String tel = (String)session.getAttribute("sessionTel");
+    String rank = (String)session.getAttribute("sessionRank");
+    String department = (String)session.getAttribute("sessionDepartment");
+    Date sessionDate = (Date) session.getAttribute("sessionDate");
 
-// ▽ 모달창에서 일정 보이기 관련
+    idList.add("\""+id+"\"");
+    nameList.add("\""+name+"\"");
+    telList.add("\""+tel+"\""); 
+    rankList.add("\""+rank+"\"");  
+    departmentList.add("\""+department+"\"");
 
-List<List<String>> DayScheduleList = (List<List<String>>) session.getAttribute("sessionDaySchedule");
-String modalYear = (String)session.getAttribute("sessionModalYear");
-String modalMonth = (String)session.getAttribute("sessionModalMonth");
-String modalDay = (String)session.getAttribute("sessionModalDay");
+    // 오늘 날짜 계산
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(sessionDate);
+    nowYear = cal.get(Calendar.YEAR); // 년도 가져오기
+    nowMonth = cal.get(Calendar.MONTH) + 1; // 월 가져오기 (+1 해야 실제 월 값과 일치)
 
-ArrayList<String>modalNameList = new ArrayList<String>();
-ArrayList<String>modalIdList = new ArrayList<String>();
-ArrayList<String>modalHourList = new ArrayList<String>();
-ArrayList<String>modalMinuteList = new ArrayList<String>();
-ArrayList<String>modalContentList = new ArrayList<String>();
 
-if (DayScheduleList != null) {
-    for (int i = 0; i < DayScheduleList.size(); i++) {
-        String nameValue = DayScheduleList.get(i).get(0); // DayScheduleList의 각 행의 첫 번째 열 값 - name
-        modalNameList.add("\"" + nameValue + "\"");
+    // 팀장일 경우 : 해당 부서 팀원들의 모든 이름, id 가져오기
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
-        String idValue = DayScheduleList.get(i).get(1);
-        modalIdList.add("\"" + idValue + "\"");
+    if(rank.equals("1")){
+        String sql = "SELECT id, name, department_idx FROM account";
+        PreparedStatement query = connect.prepareStatement(sql);
 
-        String hourValue = DayScheduleList.get(i).get(2);
-        modalHourList.add("\"" + hourValue + "\"");
+        ResultSet result = query.executeQuery();
 
-        String minuteValue = DayScheduleList.get(i).get(3);
-        modalMinuteList.add("\"" + minuteValue + "\"");
-
-        String contentValue = DayScheduleList.get(i).get(4);
-        modalContentList.add("\"" + contentValue + "\"");
+        while(result.next()){
+            if( result.getString("department").equals(department)){
+                departmentIdList.add("\""+result.getString("id")+"\"");
+                departmentNameList.add("\""+result.getString("name")+"\"");
+            }
+        }
     }
-}
+    
 
+}
 %>
 
 
@@ -96,23 +82,21 @@ if (DayScheduleList != null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link type="text/css" rel="stylesheet" href="../css/common.css">
-    <link type="text/css" rel="stylesheet" href="../css/public.css">
-    <link type="text/css" rel="stylesheet" href="../css/main.css">
+    <link type="text/css" rel="stylesheet" href="../../css/common.css">
+    <link type="text/css" rel="stylesheet" href="../../css/public.css">
+    <link type="text/css" rel="stylesheet" href="../../css/main.css">
     
 </head>
 <body>
     <div id="backParent">
         <header id="yearParent">
-            <div id="triangleLeft" onclick="yearDown()"></div>
-            <div>
-                <input type="button" id="year">
-                <span>년</span>
+            <div id="triangleLeft" onclick="location.href='../action/yearDownAction.jsp'"></div>
+            <div id="year">
+                <div>년</div>
             </div>
-            <div id="triangleRight" onclick="yearUp()"></div>
-            <div>
-                <input type="button" id="month">
-                <span id="monthLetter">월</span>
+            <div id="triangleRight" onclick="location.href='../action/yearUpAction.jsp'"></div>
+            <div id="month">
+                <div id="monthLetter">월</div>
             </div>
 
             <!-- 팀장일때만 출력하는 요소 -->
@@ -266,12 +250,29 @@ if (DayScheduleList != null) {
         console.log("현재 sessionRank : "+rank)
         console.log("현재 sessionDepartment : "+department)
 
+        
+        
         // 로그인 상태가 아니면 mainPage에 들어올 수 없도록 처리
        if(valid == false){
             alert("로그인 하십시오!")
             location.href = "../index.html"
        }
-       else{ // 내 정보 표시
+       else{
+        //현재 년도 표시
+        var yearParent = document.getElementById("year")
+        var nowYearParent = document.createElement("div")
+        var nowYear = <%= nowYear %>
+        nowYearParent.innerHTML = nowYear
+        yearParent.insertBefore(nowYearParent, yearParent.firstChild);
+        
+        //현재 월 표시
+        var monthParent = document.getElementById("month")
+        var nowMonthParent = document.createElement("div")
+        var nowMonth = <%= nowMonth %>
+        nowMonthParent.innerHTML = nowMonth
+        monthParent.insertBefore(nowMonthParent, monthParent.firstChild);
+        
+        // 내 정보 표시
         var myName = document.getElementById("myName")
         var myId = document.getElementById("myId")
         var myTel = document.getElementById("myTel")
@@ -295,7 +296,8 @@ if (DayScheduleList != null) {
         myRank.appendChild(rankDiv)
         myDepartment.appendChild(departmentDiv)
 
-        if(rank == "팀장"){
+
+        if(rank == "1"){
              var memberListParent = document.getElementById("memberListParent")
              var departmentIdList = <%=departmentIdList%>
              var departmentNameList = <%=departmentNameList%>
@@ -332,28 +334,6 @@ if (DayScheduleList != null) {
         }
 
         // △ 내 정보 표시 관련
-
-        // ▽ 모달창에서 일정 목록 보이기 관련
-        //window.addEventListener('DOMContentLoaded', function(){
-            var nameList = <%= modalNameList %>
-            var idList = <%= modalIdList %>
-            var hourList = <%= modalHourList %>
-            var minuteList = <%= modalMinuteList %>
-            var contentList = <%= modalContentList %>
-            var modalYear = <%= modalYear %>
-            var modalMonth = <%= modalMonth %>
-            var modalDay = <%= modalDay %>
-            
-            var scheduleCount = nameList.length
-            
-            console.log("nameList : "+nameList)
-            console.log("idList : "+idList)
-            console.log("hourList : "+hourList)
-            console.log("yearList : "+modalYear)
-            console.log("monthList : "+modalMonth)
-            console.log("dayList : "+modalDay)
-
-	   // });
         
 
     // 일정 목록 출력 관련
