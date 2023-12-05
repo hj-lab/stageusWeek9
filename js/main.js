@@ -22,31 +22,31 @@ closeModalBtn.onclick = function(){
     modal.style.display = "none";
 };
 
+
 // 1~12월 버튼 생성
-// 버튼 클릭시 바뀐 월 session에 저장하기
 for(i=1; i<13; i++){ 
     var newBtn = document.createElement("INPUT");
     newBtn.setAttribute("type", "button");
     var monthBtnParent = document.getElementById("monthBtnParent");
     var month = document.getElementById("month");
-    
 
     newBtn.value = i+"월";
     newBtn.className = "monthBtn";
     newBtn.id = "month"+i;
 
-    newBtn.onclick = function(){
-        lastday(this.id);
-        monthfunc(this.id);
+    newBtn.onclick = function (event) {
+        var clickedBtnValue = event.target.value;
+        lastday(event.target.id);
+        location.href = "../action/monthSelectAction.jsp?month=" + clickedBtnValue;
     }
 
     monthBtnParent.appendChild(newBtn);
 }
 
 // 모달창에서 일정 추가 버튼 -> 현재 시간 default로 하기 위해
-var today = new Date();   
-var addHour = document.getElementById("addHour")
-addHour.value = ('0' + today.getHours()).slice(-2);
+// var today = new Date();   
+// var addHour = document.getElementById("addHour")
+// addHour.value = ('0' + today.getHours()).slice(-2);
 
 }
 
@@ -66,10 +66,9 @@ for(var i=0; i<5; i++){
 
                 newCell.onclick = function(){
                     modal.style.display = "block"
-                    var dateValues = displayDate(this)
-                    sendDataToJsp(dateValues)
-
-                    // newCell의 innerHTML(일), 월, 년도 가져와야함
+                     var dateValues = displayDate(this)
+                     var myDay = dateValues.day
+                    window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                 }
             }
             else{
@@ -79,7 +78,8 @@ for(var i=0; i<5; i++){
                     newCell.onclick = function(){
                         modal.style.display = "block"
                         var dateValues = displayDate(this)
-                        sendDataToJsp(dateValues)
+                        var myDay = dateValues.day
+                        window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                     }
                 }
                 else if(j == 1){
@@ -87,8 +87,9 @@ for(var i=0; i<5; i++){
 
                     newCell.onclick = function(){
                         modal.style.display = "block"
-                        var dateValues = displayDate(this)
-                        sendDataToJsp(dateValues)
+                         var dateValues = displayDate(this)
+                         var myDay = dateValues.day
+                        window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                     }
                 }
                 else if(j == 2){
@@ -96,8 +97,9 @@ for(var i=0; i<5; i++){
 
                     newCell.onclick = function(){
                         modal.style.display = "block"
-                        var dateValues = displayDate(this)
-                        sendDataToJsp(dateValues)
+                         var dateValues = displayDate(this)
+                         var myDay = dateValues.day
+                        window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                     }
                 }
                 else{
@@ -112,7 +114,7 @@ for(var i=0; i<5; i++){
 function sendDataToJsp(dateValues){
     var form = document.createElement('form');
     form.setAttribute('method', 'post');
-    form.setAttribute('action', 'displayScheduleAction.jsp'); // 데이터를 전달할 JSP 페이지
+    // form.setAttribute('action', 'displayScheduleAction.jsp'); // 데이터를 전달할 JSP 페이지
 
     var hiddenFieldYear = document.createElement('input');
     hiddenFieldYear.setAttribute('type', 'hidden');
@@ -134,22 +136,8 @@ function sendDataToJsp(dateValues){
     form.appendChild(hiddenFieldDay);
     
     document.body.appendChild(form);
-    // var iframe = document.createElement('iframe');
-    // iframe.style.display = 'none'; // 화면에 표시되지 않도록 설정
-    // iframe.name = 'myFrame'; // iframe에 이름 부여
-
-    // document.body.appendChild(iframe);
-
-    // iframe.contentDocument.body.appendChild(form);
-    // form.target = 'myFrame'
 
     form.submit();
-
-    // iframe.src = iframe.src;
-
-    //location.reload()
-
-    // 페이지 이동 없이 전달
    
 }
 
@@ -211,16 +199,16 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
     
 }
 
-function monthfunc(id){ //현재 페이지 month 출력함수
-    var month = document.getElementById("month");
+// function monthfunc(id){ //현재 페이지 month 출력함수
+//     var month = document.getElementById("month");
 
-    var reg = /[^0-9]/g;
-    var result = id.replace(reg, ""); // 각 월 추출
-   // console.log("monthfunc 실행, result 월은 "+result); 
+//     var reg = /[^0-9]/g;
+//     var result = id.replace(reg, ""); // 각 월 추출
+//    // console.log("monthfunc 실행, result 월은 "+result); 
 
-    month.value = parseInt(result);
+//     month.value = parseInt(result);
 
-}
+// }
 
 
 function modifySchedule(myvalue){ // 수정 버튼 누를시
