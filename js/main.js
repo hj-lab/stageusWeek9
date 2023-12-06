@@ -55,6 +55,54 @@ for(i=1; i<13; i++){
 var calendarParent = document.getElementById("calendar")
 var modal = document.getElementById("modal")
 
+
+// 일정 삭제시
+window.addEventListener('message', () =>{
+    const deleteBtns = document.querySelectorAll('.deleteBtnClass')
+    const modifyBtns = document.querySelectorAll('.modifyBtnClass')
+    const contents = document.querySelectorAll('.contentClass')
+    const timeInput = document.querySelectorAll('.timeInputClass')
+                    
+    console.log(deleteBtns)
+    console.log(contents)
+
+    deleteBtns.forEach(function(btn, index) {
+        btn.addEventListener('click', function() {
+            console.log("삭제 버튼이 클릭되었습니다.");
+
+            const contentValue = contents[index].value;
+
+            console.log(contentValue)
+
+
+            location.href = "../action/deleteScheduleAction.jsp?content="+contentValue;
+        });
+    });
+
+
+    modifyBtns.forEach(function(btn, index){
+        btn.addEventListener('click', function(){
+            if(modifyBtns[index].value == "수정"){
+                console.log("수정 버튼")
+            modifyBtns[index].value = "등록"
+            modifyBtns[index].removeAttribute("disabled");
+
+            timeInput[index].removeAttribute("disabled");
+            }
+            else{
+                
+                const time = timeInput[index].value;
+                const contentValue = contents[index].value;
+
+                console.log(time)
+                location.href = "../action/modifyScheduleAction.jsp?time="+time+",content="+contentValue;
+            }
+
+            
+        })
+    })
+})
+
 for(var i=0; i<5; i++){
     var newRow = calendarParent.insertRow()
         for(var j=0; j<7; j++){
@@ -68,7 +116,7 @@ for(var i=0; i<5; i++){
                     modal.style.display = "block"
                      var dateValues = displayDate(this)
                      var myDay = dateValues.day
-                    window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                    window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=-100, top=-100,  scrollbars=no,status=no,toolbar=no,menubar=no,resizeable=no,location=no")
                 }
             }
             else{
@@ -79,7 +127,7 @@ for(var i=0; i<5; i++){
                         modal.style.display = "block"
                         var dateValues = displayDate(this)
                         var myDay = dateValues.day
-                        window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                     }
                 }
                 else if(j == 1){
@@ -89,7 +137,7 @@ for(var i=0; i<5; i++){
                         modal.style.display = "block"
                          var dateValues = displayDate(this)
                          var myDay = dateValues.day
-                        window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                     }
                 }
                 else if(j == 2){
@@ -99,7 +147,7 @@ for(var i=0; i<5; i++){
                         modal.style.display = "block"
                          var dateValues = displayDate(this)
                          var myDay = dateValues.day
-                        window.open("../action/daySelectAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
                     }
                 }
                 else{

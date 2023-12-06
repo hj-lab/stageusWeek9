@@ -32,6 +32,7 @@ try{
     while(result.next()){
         if(result.getString(2).equals(idValue) && result.getString(3).equals(pwValue)){
             valid = true;
+            session.setAttribute("sessionIdx", result.getString(1));
             session.setAttribute("sessionId", idValue);
             session.setAttribute("sessionPw", pwValue);
             session.setAttribute("sessionName", result.getString(4));

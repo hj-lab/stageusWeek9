@@ -70,13 +70,14 @@ else{
     // 팀장일 경우 : 해당 부서 팀원들의 모든 이름, id 가져오기
    
     if(rank.equals("1")){
+        
         String sql = "SELECT id, name, department_idx FROM account";
         PreparedStatement query = connect.prepareStatement(sql);
 
         ResultSet result = query.executeQuery();
 
         while(result.next()){
-            if( result.getString("department").equals(department)){
+            if( result.getString("department_idx").equals(department)){
                 departmentIdList.add("\""+result.getString("id")+"\"");
                 departmentNameList.add("\""+result.getString("name")+"\"");
             }
@@ -161,6 +162,7 @@ else{
                                 </div>
                             </div>
                         </div>
+
                     </form>
                     <img src="../../img/x.png" id="xImg">
                 </div>    
@@ -303,139 +305,11 @@ else{
         }
 
         }
-
         // △ 내 정보 표시 관련
         
-
-    // 일정 목록 출력 관련
-     var addModalTime = document.getElementById("addModalTime")
-     var addModalSchedule = document.getElementById("addModalSchedule")
-     var modalScheduleBox = document.getElementById("modalScheduleBox")
-
-//      for(var i=0; i<nameList.length; i++){
-//              //시간 관련
-//              // △△
-//             var modalTime = document.createElement("div")
-//             modalTime.id = "addModalTime"
-
-//              var upDiv = document.createElement("div")
-//              upDiv.style.display = 'flex'
-//              upDiv.style.flexDirection = 'row'
-//              upDiv.style.justifyContent = "center"
-      
-//              var hourUpBtn = document.createElement("div")
-//              hourUpBtn.id = "hourUpBtn"
-//              hourUpBtn.className = "triangleTop"
-
-//              var minuteUpBtn = document.createElement("div")
-//              minuteUpBtn.id = "minuteUpBtn"
-//              minuteUpBtn.className = "triangleTop"
-          
-//              upDiv.appendChild(hourUpBtn)
-//              upDiv.appendChild(minuteUpBtn)
-//              //
-//              // ㅁ:ㅁ
-//              var timeDiv = document.createElement("div")
-//              timeDiv.style.display = "flex"
-//              timeDiv.style.flexDirection = "row"
-//              timeDiv.style.textAlign = "center"
-//              timeDiv.style.justifyContent = "center"
-//              timeDiv.style.border = "2px solid orange"
-//              timeDiv.style.borderRadius = "10px"
-//              var hour = document.createElement("input")
-//              hour.type = "text"
-//              hour.className = "addTime"
-//              hour.value = hourList[i]
-
-//              var dot = document.createElement("div")
-//              dot.innerHTML = ":"
-
-//              var minute = document.createElement("input")
-//              minute.type = "text"
-//              minute.className = "addTime"
-//              minute.value = minuteList[i]
-
-//              timeDiv.appendChild(hour)
-//              timeDiv.appendChild(dot)
-//              timeDiv.appendChild(minute)
-//              //
-
-//              //▽▽
-//              var downDiv = document.createElement("div")
-//              downDiv.style.display = 'flex'
-//              downDiv.style.flexDirection = 'row'
-//              downDiv.style.justifyContent = "center"
-
-//              var hourDownBtn = document.createElement("div")
-//              hourDownBtn.id = "hourDownBtn"
-//              hourDownBtn.className = "triangleBottom"
-
-//              var minuteDownBtn = document.createElement("div")
-//              minuteDownBtn.id = "minuteDownBtn"
-//              minuteDownBtn.className = "triangleBottom"
-
-//              downDiv.appendChild(hourDownBtn)
-//              downDiv.appendChild(minuteDownBtn)
-
-//             //  addModalTime.appendChild(upDiv)
-//             //  addModalTime.appendChild(timeDiv)
-//             //  addModalTime.appendChild(downDiv)
-
-//             modalTime.appendChild(upDiv)
-//             modalTime.appendChild(timeDiv)
-//             modalTime.appendChild(downDiv)
-                                   
-             
-//              // ▽ 일정 목록
-//             var modalScheduleList = document.createElement("div")
-//             modalScheduleList.id= "addModalSchedule"
-
-//              var scheduleDiv = document.createElement("div")
-//              scheduleDiv.style.display = "flex"
-//              scheduleDiv.style.flexDirection = "row"
-//              scheduleDiv.style.justifyContent = "center"
-//              scheduleDiv.style.border = "2px solid orange"
-//              scheduleDiv.style.borderRadius = "10px"
-
-//              var scheduleText = document.createElement("input")
-//              scheduleText.type = "text"
-//              scheduleText.value = contentList[i]
-//              scheduleText.disabled = true
-
-//              var modifyBtn = document.createElement("input")
-//              modifyBtn.type = "button"
-//              modifyBtn.class ="scheduleBtn"
-//              modifyBtn.value = "수정"
-//              modifyBtn.onclick = function(){
-//                 modifySchedule(this)
-//              }
-             
-//              var deleteBtn = document.createElement("input")
-//              deleteBtn.type = "button"
-//              deleteBtn.class = "scheduleBtn"
-//              deleteBtn.value = "삭제"
-//              deleteBtn.onclick = function(){
-//                 deleteSchedule(this)
-//              }
-
-//              scheduleDiv.appendChild(scheduleText)
-//              scheduleDiv.appendChild(modifyBtn)
-//              scheduleDiv.appendChild(deleteBtn)
-
-//              //addModalSchedule.appendChild(scheduleDiv)
-//              modalScheduleList.appendChild(scheduleDiv)
-
-//              var listOneParent = document.createElement("div")
-//              listOneParent.style.display = "flex"
-//              listOneParent.style.flexDirection = "row"
-
-//              listOneParent.appendChild(modalTime)
-//              listOneParent.appendChild(modalScheduleList)
-
-//             modalScheduleBox.appendChild(listOneParent)
-
-//  }
-
+        
+        
+    
 
 
     </script>

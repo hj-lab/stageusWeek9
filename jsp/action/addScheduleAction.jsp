@@ -12,6 +12,10 @@
 <%
 request.setCharacterEncoding("utf-8");
 
+String sessionIdx = (String)session.getAttribute("sessionIdx");
+//int numSessionIdx = 0;
+//numSessionIdx = Integer.parseInt(sessionIdx);
+
 Date sessionDate = (Date) session.getAttribute("sessionDate");
 Calendar cal = Calendar.getInstance();
 cal.setTime(sessionDate);
@@ -31,19 +35,21 @@ Timestamp timestamp = new Timestamp(cal.getTimeInMillis());
 // 일정 내용
 String addScheduleName = request.getParameter("addScheduleName");
 
-// 세션에서 현재 나의 id, name 가져옴
 String nameValue = (String)session.getAttribute("sessionName");
-
 
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 //일정 목록 저장
-String sql = "INSERT INTO schedule(name, date, content) VALUES(?, ?, ?)";
+
+
+
+String sql = "INSERT INTO schedule(account_idx, name, date, content) VALUES(?, ?, ?, ?)";
 PreparedStatement query = connect.prepareStatement(sql);
 
-query.setString(1, nameValue);
-query.setTimestamp(2, timestamp);
-query.setString(3, addScheduleName);
+query.setString(1, sessionIdx);
+query.setString(2, nameValue);
+query.setTimestamp(3, timestamp);
+query.setString(4, addScheduleName);
 
 //query 전송, 저장 끝
 query.executeUpdate();

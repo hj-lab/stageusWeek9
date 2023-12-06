@@ -211,8 +211,6 @@ tr{
     width: 98%;
     height : 40px;
 
-    margin-top : 30px;
-
     border-radius: 10px;
     border : 2px solid orange;
   }
@@ -245,8 +243,6 @@ tr{
     flex-direction: row;
     align-items: center;
 
-    border : 2px solid red;
-
   }
 
 #addModalTime{
@@ -254,7 +250,6 @@ tr{
     flex-direction: column;
 
     width: 15%;
-  border : 2px solid red;
    
 }
 
@@ -303,8 +298,7 @@ tr{
 }
 
 #addModalSchedule{
-  border : 2px solid orange;
-  width:60%;
+  width:90%;
   display : flex;
   flex-direction : column;
   align-items: center;

@@ -5,50 +5,45 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.sql.Timestamp" %>
 
 <%
 request.setCharacterEncoding("utf-8");
 
-// 삭제할 일정 가져옴
-String deleteSchedule = request.getParameter("deleteSchedule");
-
+String scheduleContent = request.getParameter("content");
 String sessionId = (String)session.getAttribute("sessionId");
-String sessionModalYear = (String)session.getAttribute("sessionModalYear"); //현재 클릭한 요소의 년
-String sessionModalMonth = (String)session.getAttribute("sessionModalMonth"); //현재 클릭한 요소의 월
-String sessionModalDay = (String)session.getAttribute("sessionModalDay"); //현재 클릭한 요소의 일
-String sessionModalHour = (String)session.getAttribute("sessionModalHour");
-String sessionModalMinute = (String)session.getAttribute("sessionModalMinute");
+Date sessionDate = (Date) session.getAttribute("sessionDate");
 
-ArrayList<String>del = new ArrayList<String>();
-        del.add("\""+deleteSchedule+"\"");
+int year =0;
+int month =0;
+int day =0;
 
-        ArrayList<String>day = new ArrayList<String>();
-            day.add("\""+sessionModalDay+"\"");
-    
 boolean valid = true;
-
-Class.forName("com.mysql.jdbc.Driver");
-Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
 if(sessionId == null){
     valid = false;
 }
 else{
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
-String sql = "DELETE FROM schedule WHERE id = ? AND year=? AND month=? AND day=? AND hour=? AND minute=? AND content=?";
-PreparedStatement query = connect.prepareStatement(sql);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(sessionDate);
+    year = cal.get(Calendar.YEAR);
+    month = cal.get(Calendar.MONTH) + 1; // 월은 +1 해줘야함
+    day = cal.get(Calendar.DAY_OF_MONTH);
 
-query.setString(1, sessionId);
-query.setString(2, sessionModalYear);
-query.setString(3, sessionModalMonth);
-query.setString(4, sessionModalDay);
-query.setString(5, sessionModalHour);
-query.setString(6, sessionModalMinute);
-query.setString(7, deleteSchedule);
+    String sql = "DELETE FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND DAY(date)= ? AND content =?";
+    PreparedStatement query = connect.prepareStatement(sql);
 
-query.executeUpdate();
+    query.setInt(1, year);
+    query.setInt(2, month);
+    query.setInt(3, day);
+    query.setString(4, scheduleContent);
 
-//세션에서도 삭제해야함
+    query.executeUpdate();
 }
 
 %>
@@ -62,11 +57,15 @@ query.executeUpdate();
 </head>
 <body>
     <script>
-        
-        var hour = <%= del %>
+        var valid = <%= valid %>
 
-        alert("선택한 날짜의 내용 "+hour)
-        location.href = "mainPage.jsp"
+        if(valid == false){
+            alert("로그인 하세요!")
+            location.href = "../../index.html"
+        }
+        else{
+        location.href = "../page/mainPage.jsp"
+        }
     </script>
 </body>
 </html>
