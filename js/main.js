@@ -85,7 +85,7 @@ window.addEventListener('message', () =>{
             if(modifyBtns[index].value == "수정"){
                 console.log("수정 버튼")
             modifyBtns[index].value = "등록"
-            modifyBtns[index].removeAttribute("disabled");
+            contents[index].removeAttribute("disabled");
 
             timeInput[index].removeAttribute("disabled");
             }
@@ -93,9 +93,10 @@ window.addEventListener('message', () =>{
                 
                 const time = timeInput[index].value;
                 const contentValue = contents[index].value;
+                const contentIdx = contents[index].id;
 
-                console.log(time)
-                location.href = "../action/modifyScheduleAction.jsp?time="+time+",content="+contentValue;
+                console.log(contentIdx)
+                location.href = "../action/modifyScheduleAction.jsp?time="+time+"&content="+contentValue+"&idx="+contentIdx;
             }
 
             

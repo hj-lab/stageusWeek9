@@ -29,7 +29,8 @@ Date sessionTodayDate = (Date) session.getAttribute("sessionDate");
 ArrayList<String> dayNameList = new ArrayList<String>();
 ArrayList<String> dayTimeList = new ArrayList<String>();
 ArrayList<String> dayContentList = new ArrayList<String>();
-  
+ArrayList<Integer> idxList = new ArrayList<Integer>();
+
 try{
 // 년, 월, 일 추출
 int myYear = cal.get(Calendar.YEAR);
@@ -40,7 +41,7 @@ int myDay = cal.get(Calendar.DAY_OF_MONTH);
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
-String sql = "SELECT name, date, content FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND DAY(date) = ?";
+String sql = "SELECT idx, name, date, content FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND DAY(date) = ?";
 PreparedStatement query = connect.prepareStatement(sql);
 
 query.setInt(1, myYear);
@@ -50,9 +51,10 @@ query.setInt(3, myDay);
 ResultSet result = query.executeQuery();
 
 while(result.next()){
-    dayNameList.add("\""+result.getString(1)+"\"");
-    dayTimeList.add("\""+result.getString(2)+"\"");
-    dayContentList.add("\""+result.getString(3)+"\"");
+    idxList.add(result.getInt(1));
+    dayNameList.add("\""+result.getString(2)+"\"");
+    dayTimeList.add("\""+result.getString(3)+"\"");
+    dayContentList.add("\""+result.getString(4)+"\"");
 }
 
 }catch(Exception e){
@@ -73,6 +75,7 @@ while(result.next()){
         var dayNameList = <%= dayNameList %>
         var dayTimeList = <%= dayTimeList %>
         var dayContentList = <%= dayContentList %>
+        var idxList = <%= idxList %>
 
         var scheduleList = window.opener.document.getElementById("scheduleList")
 
@@ -116,7 +119,8 @@ while(result.next()){
                 content.setAttribute("disabled", true)
                 // 내용 넣기
                 content.value = dayContentList[i]
-                content.id = "content"
+                // input type="text"에 해당 목록의 고유한 idx값을 id로
+                content.id = idxList[i]
                 content.classList.add("contentClass")
 
                 // 수정버튼

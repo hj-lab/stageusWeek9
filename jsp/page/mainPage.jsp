@@ -216,6 +216,7 @@ else{
         var tel = <%= telList %>
         var rank = <%= rankList %>
         var department = <%= departmentList %>
+       
 
         console.log("현재 sessionId : "+id)
         console.log("현재 sessionName : "+name)

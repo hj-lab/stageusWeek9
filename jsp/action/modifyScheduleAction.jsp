@@ -16,13 +16,12 @@
 request.setCharacterEncoding("utf-8");
 
 // 수정할 일정의 내용
-String time = request.getParameter("time");
-String content = request.getParameter("content");
+String time = request.getParameter("time"); // 17:37 형식
+String myContent = request.getParameter("content");
+int idxNum = Integer.parseInt(request.getParameter("idx"));
 Date sessionDate = (Date) session.getAttribute("sessionDate");
+String sessionName = (String)session.getAttribute("sessionName");
 String sessionId = (String)session.getAttribute("sessionId");
-
-//timestamp 형식으로 바꾸기
-Timestamp timestamp = new Timestamp(sessionDate.getTime());
 
 boolean valid = true;
 
@@ -32,20 +31,27 @@ int year = cal.get(Calendar.YEAR);
 int month = cal.get(Calendar.MONTH); // 월은 0부터 시작하므로 +1을 해야 실제 월이 됩니다.
 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-Date timeDate = sdf.parse(time); // time 값을 Date 객체로 파싱합니다.
+//input type="time"에서 값 가져옴
+String[] timeParts = time.split(":");
+int modifyHour = 0;
+int modifyMinute = 0;
+if (timeParts.length == 2) {
+    modifyHour = Integer.parseInt(timeParts[0].trim()); // 시간
+    modifyMinute = Integer.parseInt(timeParts[1].trim()); // 분
+}
 
+
+// 세션 값 변경
 Calendar timeCal = Calendar.getInstance();
 timeCal.setTime(sessionDate);
-int hour = timeCal.get(Calendar.HOUR_OF_DAY);
-int minute = timeCal.get(Calendar.MINUTE);
 
-timeCal.set(Calendar.HOUR_OF_DAY, hour);
-timeCal.set(Calendar.MINUTE, minute);
+timeCal.set(Calendar.HOUR_OF_DAY, modifyHour);
+timeCal.set(Calendar.MINUTE, modifyMinute);
 
 Date modifiedDate = timeCal.getTime();
-Timestamp modifiedTimestamp = new Timestamp(modifiedDate.getTime());
 
+Timestamp timeStampSessionDate = new Timestamp(sessionDate.getTime());
+Timestamp timeStampModifiedDate = new Timestamp(modifiedDate.getTime());
 
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
@@ -54,18 +60,17 @@ if(sessionId == null){
     valid = false;
 }
 else{
-
-String sql = "UPDATE schedule SET content=? AND date=? WHERE id = ? AND date = ?";
+// 원래는 WHERE name=? date=?
+String sql = "UPDATE schedule SET content=? AND date=? WHERE idx = ? ";
 PreparedStatement query = connect.prepareStatement(sql);
 
-query.setString(1, content);
-query.setTimestamp(2, modifiedTimestamp);
-query.setString(3, sessionId);
-query.setTimestamp(4,timestamp);
+query.setString(1, myContent);
+query.setTimestamp(2, timeStampModifiedDate);
+query.setInt(3, idxNum);
 
 query.executeUpdate();
 
-session.setAttribute("sessionDate", modifiedTimestamp);
+session.setAttribute("sessionDate", modifiedDate);
 }
 
 %>
@@ -79,7 +84,6 @@ session.setAttribute("sessionDate", modifiedTimestamp);
 </head>
 <body>
     <script>
-        
        location.href = "../page/mainPage.jsp"
     </script> 
 </body>
