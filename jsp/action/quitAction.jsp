@@ -15,6 +15,7 @@ String sessionName = (String)session.getAttribute("sessionName");
 String sessionTel = (String)session.getAttribute("sessionTel");
 String sessionRank = (String)session.getAttribute("sessionRank");
 String sessionDepartment = (String)session.getAttribute("sessionDepartment");
+String sessionIdx = (String)session.getAttribute("sessionIdx");
 
 boolean valid = true;
 // 세션에서 삭제
@@ -25,6 +26,7 @@ boolean valid = true;
     session.removeAttribute("sessionTel");
     session.removeAttribute("sessionRank");
     session.removeAttribute("sessionDepartment");
+    session.removeAttribute("sessionIdx");
 
     valid = false;
 
@@ -37,9 +39,9 @@ boolean valid = true;
     query.setString(1, sessionId);
     
     // schedule 테이블에서 삭제
-    String sql2 = "DELETE FROM schedule WHERE id=?";
+    String sql2 = "DELETE FROM schedule WHERE idx=?";
     PreparedStatement query2 = connect.prepareStatement(sql2);
-    query2.setString(1, sessionId);
+    query2.setString(1, sessionIdx);
     
     
     query.executeUpdate();
@@ -60,12 +62,15 @@ boolean valid = true;
     <script>
     var valid = <%=valid%>
 
+    var id = <%=sessionId%>
+    
+
     if(valid == true){
         alert("로그인 하십시오.")
-        location.href = "../index.html"
+        location.href = "../../index.html"
     }
     else{
-        location.href = "../index.html"
+        location.href = "../../index.html"
     }
 </script>
     

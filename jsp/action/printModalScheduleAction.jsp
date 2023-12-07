@@ -20,11 +20,16 @@ cal.setTime(sessionDate);
 // 세션의 일 업데이트
 cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
 
+// 클릭한 일로 세션 업데이트
 Date modifiedDate = cal.getTime();
 session.setAttribute("sessionDate", modifiedDate);
 
 // 클릭한 일의 일정 리스트 가져오기
 Date sessionTodayDate = (Date) session.getAttribute("sessionDate");
+
+// 내 account의 idx 가져옴
+String accountIdxStr = (String) session.getAttribute("sessionIdx");
+Integer accountIdx = Integer.parseInt(accountIdxStr);
 
 ArrayList<String> dayNameList = new ArrayList<String>();
 ArrayList<String> dayTimeList = new ArrayList<String>();
@@ -41,12 +46,13 @@ int myDay = cal.get(Calendar.DAY_OF_MONTH);
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
-String sql = "SELECT idx, name, date, content FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND DAY(date) = ?";
+String sql = "SELECT idx, name, date, content FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND DAY(date) = ? AND account_idx = ?";
 PreparedStatement query = connect.prepareStatement(sql);
 
 query.setInt(1, myYear);
 query.setInt(2, myMonth);
 query.setInt(3, myDay);
+query.setInt(4, accountIdx);
 
 ResultSet result = query.executeQuery();
 

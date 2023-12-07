@@ -48,9 +48,9 @@ if(id == null){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link type="text/css" rel="stylesheet" href="../css/modifyInform.css">
-    <link type="text/css" rel="stylesheet" href="../css/common.css">
-    <link type="text/css" rel="stylesheet" href="../css/public.css">
+    <link type="text/css" rel="stylesheet" href="../../css/modifyInform.css">
+    <link type="text/css" rel="stylesheet" href="../../css/common.css">
+    <link type="text/css" rel="stylesheet" href="../../css/public.css">
 </head>
 <body>
     <div id="backParent">
@@ -58,11 +58,10 @@ if(id == null){
 
         <button onclick="history.back()" id="backBtn">이전으로</button>
 
-        <form name="myform" action="modifyInformAction.jsp" id="myform" onsubmit="checkEvent(event)">
+        <form name="myform" action="../action/modifyInformAction.jsp" id="myform" onsubmit="checkEvent(event)">
             <div id="idParent">
                 <span>id : </span>
                 <input type="text" id="idValue" name="id" class="inputBox">
-                <input type="button" id="duplicateBtn" value="중복확인" onclick="idCheckEvent()">
             </div>
 
             <div id="pwParent">
@@ -87,14 +86,14 @@ if(id == null){
 
             <div id="rankParent">
                 <div id="Btn">직급</div>
-                <input type="radio" name="rank" id="radioBtn" value="팀장">팀장
-                <input type="radio" name="rank" id="radioBtn" value="팀원">팀원 
+                <input type="radio" name="rank" id="radioBtn" value="1">팀장
+                <input type="radio" name="rank" id="radioBtn" value="2">팀원 
             </div>
 
             <div id="departmentParent">
                 <div id="Btn">부서</div>
-                <input type="radio" name="department" id="radioBtn" value="개발팀">개발팀
-                <input type="radio" name="department" id="radioBtn" value="디자인팀">디자인팀
+                <input type="radio" name="department" id="radioBtn" value="1">개발팀
+                <input type="radio" name="department" id="radioBtn" value="2">디자인팀
             </div>
 
             <input type="submit" id="findIdBtn" value="정보 수정">
@@ -119,48 +118,39 @@ if(id == null){
         
         console.log("tel : "+tel)
         console.log("rank : "+rank)
+        console.log("departmet : "+department)
 
         if(valid == false){
             alert("로그인 하십시오!")
-            location.href = "../index.html"
+            location.href = "../../index.html"
         }
         else{
             var idDiv = document.getElementById("idValue")
-            idDiv.placeholder = id
+            idDiv.value = id
+            idDiv.setAttribute("disabled", true)
 
             var pwDiv = document.getElementById("pwValue")
-            pwDiv.placeholder = pw
+            pwDiv.value = pw
 
             var pwCheckDiv = document.getElementById("pwCheckValue")
-            pwCheckDiv.placeholder = pw
+            pwCheckDiv.value = pw
 
             var nameDiv = document.getElementById("nameValue")
-            nameDiv.placeholder = name
+            nameDiv.value = name
 
             var telDiv = document.getElementById("telValue")
-            telDiv.placeholder = tel
+            telDiv.value = tel
 
             var rankDiv = document.getElementsByName("rank")
-            
-            for(var i=0; i<rankDiv.length; i++){
-                if(rankDiv[i].value == rank){
-                    rankDiv[i].checked = true
-                }
-            }
+            rankDiv[rank-1].checked = true
 
             var departmentDiv = document.getElementsByName("department")
-            for(var i=0; i<departmentDiv.length; i++){
-                if(departmentDiv[i].value == department){
-                    departmentDiv[i].checked = true
-                }
-            }
+            departmentDiv[department-1].checked = true
 
         }
 
 
         function checkEvent(event){
-            console.log("check이벤트 실행")
-
             var id = String(document.getElementById("idValue")).value
             var pw = String(document.getElementById("pwValue").value)
             var pwCheck = String(document.getElementById("pwCheckValue").value)

@@ -7,6 +7,8 @@
 <%@ page import="java.util.List" %>
 
 <%
+// 필요없는거 아님 ?
+
 // 클릭한 날짜 가져오기
 String yearValue = request.getParameter("year");
 String monthValue = request.getParameter("month");

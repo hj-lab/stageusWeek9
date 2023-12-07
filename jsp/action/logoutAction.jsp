@@ -13,6 +13,9 @@ boolean valid = true;
     session.removeAttribute("sessionRank");
     session.removeAttribute("sessionDepartment");
 
+    session.removeAttribute("sessionDate");
+    session.removeAttribute("sessionIdx");
+
     valid = false;
     }
    
@@ -29,10 +32,10 @@ boolean valid = true;
 
         if(valid == true){ // id가 비어있으면 = 로그인 안한것
             alert("로그인 하십시오.")
-            location.href="index.html"
+            location.href="../../index.html"
         }
         else{
-            location.href="../index.html"
+            location.href="../../index.html"
         }
     </script>
 </body>

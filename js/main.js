@@ -248,17 +248,6 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
     
 }
 
-// function monthfunc(id){ //현재 페이지 month 출력함수
-//     var month = document.getElementById("month");
-
-//     var reg = /[^0-9]/g;
-//     var result = id.replace(reg, ""); // 각 월 추출
-//    // console.log("monthfunc 실행, result 월은 "+result); 
-
-//     month.value = parseInt(result);
-
-// }
-
 
 function modifySchedule(myvalue){ // 수정 버튼 누를시
     // visible 상태일때 클릭하면 form 제출 jsp 로 넘어가도록 하자
@@ -272,8 +261,6 @@ function modifySchedule(myvalue){ // 수정 버튼 누를시
 
     if(siblingInput.disabled == true){
         siblingInput.removeAttribute("disabled");   
-        // document.getElementById("hideUpBtn").style.visibility = "visible";
-        //  document.getElementById("hideDownBtn").style.visibility = "visible";
         siblingInput.style.visibility ="visible";
     }
     else if(siblingInput.disabled == false){
@@ -282,8 +269,6 @@ function modifySchedule(myvalue){ // 수정 버튼 누를시
         console.log("block 실행");
         // 닫을때 실행
         location.href = 'modifyScheduleAction.jsp?modifySchedule='+siblingInputValue
-        // document.getElementById("hideUpBtn").style.visibility = "hidden";
-        //  document.getElementById("hideDownBtn").style.visibility = "hidden";
     }
 
     

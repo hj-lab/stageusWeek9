@@ -114,7 +114,7 @@ else{
             </div>
 
             <!-- 팀장일때만 출력하는 요소 -->
-            <div id="memberName">조희주 팀원</div>
+            <div id="memberName"></div>
         </header>
 
         <div id="monthBtnArea">
@@ -187,7 +187,7 @@ else{
         </div>
 
         <div id="logOutParent">
-            <input type="button" id="logOutBtn" value="로그아웃" onclick="location.href='logoutAction.jsp'">
+            <input type="button" id="logOutBtn" value="로그아웃" onclick="location.href='../action/logoutAction.jsp'">
         </div>
 
         <div id="quitParent">

@@ -16,19 +16,20 @@
 request.setCharacterEncoding("utf-8");
 
 // 수정할 일정의 내용
-String time = request.getParameter("time"); // 17:37 형식
-String myContent = request.getParameter("content");
-int idxNum = Integer.parseInt(request.getParameter("idx"));
-Date sessionDate = (Date) session.getAttribute("sessionDate");
-String sessionName = (String)session.getAttribute("sessionName");
-String sessionId = (String)session.getAttribute("sessionId");
+String time = request.getParameter("time"); // ex_ 17:37 
+String myContent = request.getParameter("content"); // ex_ 일정수정 
+String scheduleIdxStr = request.getParameter("idx");  // 내가 클릭한 일정의 idx
+Integer scheduleIdx = Integer.parseInt(scheduleIdxStr);
+Date sessionDate = (Date) session.getAttribute("sessionDate"); // 클릭한 년, 월, 일
+String sessionName = (String)session.getAttribute("sessionName"); // 내 name
+String sessionId = (String)session.getAttribute("sessionId"); // 내 id
 
 boolean valid = true;
 
 Calendar cal = Calendar.getInstance();
 cal.setTime(sessionDate);
 int year = cal.get(Calendar.YEAR);
-int month = cal.get(Calendar.MONTH); // 월은 0부터 시작하므로 +1을 해야 실제 월이 됩니다.
+int month = cal.get(Calendar.MONTH); // 월은 0부터 시작하므로 +1
 int day = cal.get(Calendar.DAY_OF_MONTH);
 
 //input type="time"에서 값 가져옴
@@ -60,13 +61,12 @@ if(sessionId == null){
     valid = false;
 }
 else{
-// 원래는 WHERE name=? date=?
-String sql = "UPDATE schedule SET content=? AND date=? WHERE idx = ? ";
+String sql = "UPDATE schedule SET content=?, date=? WHERE idx = ? ";
 PreparedStatement query = connect.prepareStatement(sql);
 
 query.setString(1, myContent);
 query.setTimestamp(2, timeStampModifiedDate);
-query.setInt(3, idxNum);
+query.setInt(3, scheduleIdx);
 
 query.executeUpdate();
 

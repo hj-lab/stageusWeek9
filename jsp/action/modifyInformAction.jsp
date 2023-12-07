@@ -9,32 +9,11 @@ request.setCharacterEncoding("utf-8");
 
 String sessionId = (String)session.getAttribute("sessionId");
 
-String idValue = request.getParameter("id"); 
 String pwValue = request.getParameter("pw");
 String nameValue = request.getParameter("name");
 String telValue = request.getParameter("tel");
 String rankValue = request.getParameter("rank");
 String departmentValue = request.getParameter("department");
-
-String beforeSessionId = (String)session.getAttribute("sessionId");
-String beforeSessionPw = (String)session.getAttribute("sessionPw");
-String beforeSessionName = (String)session.getAttribute("sessionName");
-String beforeSessionTel = (String)session.getAttribute("sessionTel");
-
-    
-if(idValue == null){
-    idValue = beforeSessionId;
-}
-
-if(pwValue == null){
-    pwValue = beforeSessionPw;
-}
-if(nameValue == null){
-    nameValue = beforeSessionName;
-}
-if(telValue == null){
-    telValue = beforeSessionTel;
-}
 
 boolean valid = true;
 
@@ -46,20 +25,18 @@ if(sessionId == null){
 }
 else{
 
-String sql = "UPDATE account SET id=?, pw=?, name=?, tel=?, rank=?, department=? WHERE id = ?";
+String sql = "UPDATE account SET pw=?, name=?, tel=?, rank_idx=?, department_idx=? WHERE id = ?";
 PreparedStatement query = connect.prepareStatement(sql);
 
-query.setString(1, idValue);
-query.setString(2, pwValue);
-query.setString(3, nameValue);
-query.setString(4, telValue);
-query.setString(5, rankValue);
-query.setString(6, departmentValue);
-query.setString(7, sessionId);
+query.setString(1, pwValue);
+query.setString(2, nameValue);
+query.setString(3, telValue);
+query.setString(4, rankValue);
+query.setString(5, departmentValue);
+query.setString(6, sessionId);
 
 query.executeUpdate();
 
-session.setAttribute("sessionId", idValue);
 session.setAttribute("sessionPw", pwValue);
 session.setAttribute("sessionName", nameValue);
 session.setAttribute("sessionTel", telValue);
@@ -80,8 +57,10 @@ session.setAttribute("sessionDepartment", departmentValue);
 </head>
 <body>
     <script>
+        var departmentValue = <%= departmentValue %>
+        console.log(departmentValue)
         
-        location.href = "mainPage.jsp"
+        location.href = "../page/mainPage.jsp"
     </script>
 </body>
 </html>

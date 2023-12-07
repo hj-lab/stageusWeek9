@@ -41,8 +41,6 @@ Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 //일정 목록 저장
 
-
-
 String sql = "INSERT INTO schedule(account_idx, name, date, content) VALUES(?, ?, ?, ?)";
 PreparedStatement query = connect.prepareStatement(sql);
 
@@ -53,6 +51,8 @@ query.setString(4, addScheduleName);
 
 //query 전송, 저장 끝
 query.executeUpdate();
+
+
 
 %>
 
