@@ -23,6 +23,12 @@ ArrayList<String> departmentList = new ArrayList<String>();
 ArrayList<String> departmentIdList = new ArrayList<String>();
 ArrayList<String> departmentNameList = new ArrayList<String>();
 
+//일정개수가 있는 일만 담음
+ArrayList<Integer> scheduleDayList = new ArrayList<Integer>();
+//일정개수 담은 list
+ArrayList<Integer> scheduleCountList = new ArrayList<Integer>();
+// 팀원 list
+
 int nowYear = 0;
 int nowMonth = 0;
 
@@ -42,7 +48,7 @@ else{
     String rank = (String)session.getAttribute("sessionRank");
     String department = (String)session.getAttribute("sessionDepartment");
     Date sessionDate = (Date) session.getAttribute("sessionDate");
-
+    
     idList.add("\""+id+"\"");
     nameList.add("\""+name+"\"");
     telList.add("\""+tel+"\""); 
@@ -55,8 +61,9 @@ else{
     nowYear = cal.get(Calendar.YEAR); // 년도 가져오기
     nowMonth = cal.get(Calendar.MONTH) + 1; // 월 가져오기 (+1 해야 실제 월 값과 일치)
 
-    // 해당 년, 월의 일정 목록 가져오기
-    String sql2 = "SELECT * FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ?";
+    // 해당 년, 월의 일정 목록 가져오기 -> 개수 표시할 때 필요
+    int [] scheduleCount = new int[31];
+    String sql2 = "SELECT DAY(date) AS day,COUNT(*) as dayCount FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? GROUP BY DAY(date)";
     PreparedStatement query2 = connect.prepareStatement(sql2);
     
     query2.setInt(1, nowYear);
@@ -64,24 +71,35 @@ else{
 
     ResultSet result2 = query2.executeQuery();
 
+
     while(result2.next()){
-        
+        int day = result2.getInt("day");
+        int count = result2.getInt("dayCount");
+
+        scheduleDayList.add(day); // 10일에
+        scheduleCountList.add(count); // 일정 4개
+
     }
+
     // 팀장일 경우 : 해당 부서 팀원들의 모든 이름, id 가져오기
    
     if(rank.equals("1")){
+        int timoneIdx = 2;
+        int departmentIdx = Integer.parseInt(department);
         
-        String sql = "SELECT id, name, department_idx FROM account";
+        String sql = "SELECT id, name FROM account WHERE rank_idx =? AND department_idx = ?";
         PreparedStatement query = connect.prepareStatement(sql);
+
+        query.setInt(1, timoneIdx);
+        query.setInt(2, departmentIdx);
 
         ResultSet result = query.executeQuery();
 
         while(result.next()){
-            if( result.getString("department_idx").equals(department)){
                 departmentIdList.add("\""+result.getString("id")+"\"");
                 departmentNameList.add("\""+result.getString("name")+"\"");
-            }
         }
+
     }
     
 
@@ -216,7 +234,10 @@ else{
         var tel = <%= telList %>
         var rank = <%= rankList %>
         var department = <%= departmentList %>
-       
+
+        // 일정이 있는 날짜, 개수
+        var scheduleDayList = <%= scheduleDayList %>
+        var scheduleCount = <%= scheduleCountList %>
 
         console.log("현재 sessionId : "+id)
         console.log("현재 sessionName : "+name)
@@ -260,9 +281,20 @@ else{
         var telDiv = document.createElement("span")
         telDiv.innerHTML = tel
         var rankDiv = document.createElement("span")
-        rankDiv.innerHTML = rank
+        if(rank == 1){
+            rankDiv.innerHTML = "팀장"
+        }
+        if(rank == 2){
+            rankDiv.innerHTML = "팀원"
+        }
+
         var departmentDiv = document.createElement("span")
-        departmentDiv.innerHTML = department
+        if(department == 1){
+            departmentDiv.innerHTML = "개발팀"
+        }
+        if(department == 2){
+            departmentDiv.innerHTML = "디자인팀"
+        }
         
         myName.appendChild(nameDiv)
         myId.appendChild(idDiv)
@@ -286,7 +318,7 @@ else{
 
                 var departmentList = document.createElement("div") // 여기에 onclick 줘서 팀원 일정창으로 넘어가게
                 departmentList.onclick = function() {
-                    window.location.href = "goToMemberPage.jsp?id=" + memberId + "&name=" + memberName;
+                    window.location.href = "../action/goToMemberAction.jsp?id=" + memberId + "&name=" + memberName;
                 };
 
                 var departmentIdDiv = document.createElement("span")
@@ -303,18 +335,99 @@ else{
                 
                 memberListParent.appendChild(departmentList)
              }
+
+            //  var memberNameParent = document.getElementById("clickName")
+            //  var memberName = document.createElement("div")
+            // //  memberName.innerHTML = clickName
+
+            // console.log(clickName)
+            //  memberNameParent.appendChild(memberName)
         }
 
         }
         // △ 내 정보 표시 관련
-        
-        
-        
-    
 
+        for(var i=0; i<5; i++){
+            var newRow = calendarParent.insertRow()
+            for(var j=0; j<7; j++){
+                var newCell = newRow.insertCell()
+                newCell.classList.add("myNewCell")
+
+                if(i<4){
+                    newCell.innerHTML = i*7 + (j+1)
+                    newCell.id = "day"+(i*7+(j+1))
+
+                    newCell.onclick = function(){
+                        modal.style.display = "block"
+                        var dateValues = displayDate(this)
+                        var myDay = dateValues.day
+                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=-100, top=-100,  scrollbars=no,status=no,toolbar=no,menubar=no,resizeable=no,location=no")
+                    }
+                }
+                else{
+                    if(j == 0){
+                        newCell.id = "day29"
+
+                        newCell.onclick = function(){
+                            modal.style.display = "block"
+                            var dateValues = displayDate(this)
+                            var myDay = dateValues.day
+                            window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                        }
+                    }
+                    else if(j == 1){
+                        newCell.id = "day30"
+
+                        newCell.onclick = function(){
+                            modal.style.display = "block"
+                            var dateValues = displayDate(this)
+                            var myDay = dateValues.day
+                            window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                        }
+                    }
+                    else if(j == 2){
+                        newCell.id = "day31"
+
+                        newCell.onclick = function(){
+                            modal.style.display = "block"
+                            var dateValues = displayDate(this)
+                            var myDay = dateValues.day
+                            window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+                        }
+                    }
+                    else{
+                        newCell.innerHTML = ""
+                    }
+                }
+            } 
+}
+
+for (var i = 0; i < scheduleDayList.length; i++) {
+
+    // 일정이 있는 날짜값 가져옴
+    var dayNumber = scheduleDayList[i];
+
+    var mycell = document.getElementById("day"+dayNumber)
+    console.log(mycell.innerHTML)
+
+    var countDiv = document.createElement("div");
+
+    // 일정 개수 표시
+    if(scheduleCount[i] > 9){
+        countDiv.innerHTML = "9+"
+    }
+    else{
+        countDiv.innerHTML = scheduleCount[i];
+    }
+        
+    countDiv.style.width = "30%";
+    countDiv.style.borderRadius = "10px";
+    countDiv.style.border = "2px solid orange";
+
+    mycell.appendChild(countDiv);
+
+}
 
     </script>
 </body>
 </html>
-
-<!-- 스케줄이 있을때 띄우는 박스 : scheduleBox! -->

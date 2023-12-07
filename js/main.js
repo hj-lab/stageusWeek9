@@ -43,10 +43,6 @@ for(i=1; i<13; i++){
     monthBtnParent.appendChild(newBtn);
 }
 
-// 모달창에서 일정 추가 버튼 -> 현재 시간 default로 하기 위해
-// var today = new Date();   
-// var addHour = document.getElementById("addHour")
-// addHour.value = ('0' + today.getHours()).slice(-2);
 
 }
 
@@ -104,61 +100,67 @@ window.addEventListener('message', () =>{
     })
 })
 
-for(var i=0; i<5; i++){
-    var newRow = calendarParent.insertRow()
-        for(var j=0; j<7; j++){
-            var newCell = newRow.insertCell()
 
-            if(i<4){
-                newCell.innerHTML = i*7 + (j+1)
-                newCell.id = "day"+(i+1)
 
-                newCell.onclick = function(){
-                    modal.style.display = "block"
-                     var dateValues = displayDate(this)
-                     var myDay = dateValues.day
-                    window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=-100, top=-100,  scrollbars=no,status=no,toolbar=no,menubar=no,resizeable=no,location=no")
-                }
-            }
-            else{
-                if(j == 0){
-                    newCell.id = "day29"
+// for(var i=0; i<5; i++){
+//     var newRow = calendarParent.insertRow()
+//         for(var j=0; j<7; j++){
+//             var newCell = newRow.insertCell()
 
-                    newCell.onclick = function(){
-                        modal.style.display = "block"
-                        var dateValues = displayDate(this)
-                        var myDay = dateValues.day
-                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
-                    }
-                }
-                else if(j == 1){
-                    newCell.id = "day30"
+//             if(i<4){
+//                 newCell.innerHTML = i*7 + (j+1)
+//                 newCell.id = "day"+(i+1)
 
-                    newCell.onclick = function(){
-                        modal.style.display = "block"
-                         var dateValues = displayDate(this)
-                         var myDay = dateValues.day
-                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
-                    }
-                }
-                else if(j == 2){
-                    newCell.id = "day31"
+//                 newCell.onclick = function(){
+//                     modal.style.display = "block"
+//                      var dateValues = displayDate(this)
+//                      var myDay = dateValues.day
+//                     window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=-100, top=-100,  scrollbars=no,status=no,toolbar=no,menubar=no,resizeable=no,location=no")
+//                 }
+//             }
+//             else{
+//                 if(j == 0){
+//                     newCell.id = "day29"
 
-                    newCell.onclick = function(){
-                        modal.style.display = "block"
-                         var dateValues = displayDate(this)
-                         var myDay = dateValues.day
-                        window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
-                    }
-                }
-                else{
-                    newCell.innerHTML = ""
-                }
-            }
-        } 
+//                     newCell.onclick = function(){
+//                         modal.style.display = "block"
+//                         var dateValues = displayDate(this)
+//                         var myDay = dateValues.day
+//                         window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+//                     }
+//                 }
+//                 else if(j == 1){
+//                     newCell.id = "day30"
+
+//                     newCell.onclick = function(){
+//                         modal.style.display = "block"
+//                          var dateValues = displayDate(this)
+//                          var myDay = dateValues.day
+//                         window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+//                     }
+//                 }
+//                 else if(j == 2){
+//                     newCell.id = "day31"
+
+//                     newCell.onclick = function(){
+//                         modal.style.display = "block"
+//                          var dateValues = displayDate(this)
+//                          var myDay = dateValues.day
+//                         window.open("../action/printModalScheduleAction.jsp?myDay="+myDay, "daySelect", " width=1, height=1, left=screen.width,top=screen.height ")
+//                     }
+//                 }
+//                 else{
+//                     newCell.innerHTML = ""
+//                 }
+//             }
+//         } 
 
         
-}
+// }
+
+
+
+
 
 function sendDataToJsp(dateValues){
     var form = document.createElement('form');
@@ -201,10 +203,10 @@ function displayDate(id){
     modalMonth.value = month
 
     var modalDay = document.getElementById("modalDay")
-    var day = id.innerHTML
+    var day = id.id.substring(3); //day30 -> 30
     modalDay.value = day
 
-    console.log("modalYear : "+modalYear.value)
+    console.log("클릭한 day : "+modalDay.value)
     
     return {
         year : year,
@@ -231,7 +233,7 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
         if(lastday == 30){
             day29.innerHTML = 29;
             day30.innerHTML = 30;
-            day31.innerHTML = "";
+            day31.innerHTML = " ";
         }
         else if(lastday == 31){
             
@@ -241,9 +243,9 @@ function lastday(id){ // 각 월의 마지막 날짜 계산하는 함수
         }
     }
     else if(result == 2){
-        day29.innerHTML = ""
-        day30.innerHTML = ""
-        day31.innerHTML = ""
+        day29.innerHTML = " "
+        day30.innerHTML = " "
+        day31.innerHTML = " "
     }
     
 }
@@ -265,7 +267,6 @@ function modifySchedule(myvalue){ // 수정 버튼 누를시
     }
     else if(siblingInput.disabled == false){
         siblingInput.setAttribute('disabled',true);
-        //disable = true가됨 = 수정불가 상태
         console.log("block 실행");
         // 닫을때 실행
         location.href = 'modifyScheduleAction.jsp?modifySchedule='+siblingInputValue
