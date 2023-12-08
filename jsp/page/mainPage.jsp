@@ -23,11 +23,14 @@ ArrayList<String> departmentList = new ArrayList<String>();
 ArrayList<String> departmentIdList = new ArrayList<String>();
 ArrayList<String> departmentNameList = new ArrayList<String>();
 
-//일정개수가 있는 일만 담음
+//일정개수가 있는 일 담음
 ArrayList<Integer> scheduleDayList = new ArrayList<Integer>();
 //일정개수 담은 list
 ArrayList<Integer> scheduleCountList = new ArrayList<Integer>();
-// 팀원 list
+// 팀장이 팀원 클릭할때 팀원의 id
+ArrayList<String> anotherPersonId = new ArrayList<String>();
+ArrayList<String> anotherPersonName = new ArrayList<String>();
+
 
 int nowYear = 0;
 int nowMonth = 0;
@@ -48,12 +51,22 @@ else{
     String rank = (String)session.getAttribute("sessionRank");
     String department = (String)session.getAttribute("sessionDepartment");
     Date sessionDate = (Date) session.getAttribute("sessionDate");
-    
+    String Idx = (String)session.getAttribute("sessionIdx");
+    int accountIdx = Integer.parseInt(Idx);
+    //name
+    //String anotherPersonName = (String)session.getAttribute("memberName");
+    String sessionAnotherPersonName = (String)session.getAttribute("sessionAnotherPersonName");
+    //id
+    String sessionAnotherPerson = (String) session.getAttribute("sessionAnotherPerson");
+
+
     idList.add("\""+id+"\"");
     nameList.add("\""+name+"\"");
     telList.add("\""+tel+"\""); 
     rankList.add("\""+rank+"\"");  
     departmentList.add("\""+department+"\"");
+    anotherPersonId.add("\""+sessionAnotherPerson+"\"");
+    anotherPersonName.add("\""+sessionAnotherPersonName+"\"");
 
     // 오늘 날짜 계산
     Calendar cal = Calendar.getInstance();
@@ -62,12 +75,27 @@ else{
     nowMonth = cal.get(Calendar.MONTH) + 1; // 월 가져오기 (+1 해야 실제 월 값과 일치)
 
     // 해당 년, 월의 일정 목록 가져오기 -> 개수 표시할 때 필요
+    
+    // 팀장이 다른 팀원을 클릭한 경우라면
+    if (sessionAnotherPerson != null && !sessionAnotherPerson.isEmpty()) {
+        String sqlAnotherPerson = "SELECT idx FROM account WHERE id = ?";
+        PreparedStatement queryAnotherPerson = connect.prepareStatement(sqlAnotherPerson);
+        queryAnotherPerson.setString(1, sessionAnotherPerson);
+        ResultSet resultAnotherPerson = queryAnotherPerson.executeQuery();
+    
+        if (resultAnotherPerson.next()) {
+            accountIdx = resultAnotherPerson.getInt("idx");
+        }
+    }
+    
+    
     int [] scheduleCount = new int[31];
-    String sql2 = "SELECT DAY(date) AS day,COUNT(*) as dayCount FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? GROUP BY DAY(date)";
+    String sql2 = "SELECT DAY(date) AS day,COUNT(*) as dayCount FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND account_idx = ? GROUP BY DAY(date)";
     PreparedStatement query2 = connect.prepareStatement(sql2);
     
     query2.setInt(1, nowYear);
     query2.setInt(2, nowMonth);
+    query2.setInt(3, accountIdx);
 
     ResultSet result2 = query2.executeQuery();
 
@@ -87,11 +115,11 @@ else{
         int timoneIdx = 2;
         int departmentIdx = Integer.parseInt(department);
         
-        String sql = "SELECT id, name FROM account WHERE rank_idx =? AND department_idx = ?";
+        String sql = "SELECT id, name FROM account WHERE department_idx = ? AND  rank_idx = ?";
         PreparedStatement query = connect.prepareStatement(sql);
-
-        query.setInt(1, timoneIdx);
-        query.setInt(2, departmentIdx);
+        
+        query.setInt(1, departmentIdx);
+        query.setInt(2, timoneIdx);
 
         ResultSet result = query.executeQuery();
 
@@ -214,8 +242,6 @@ else{
 
         <!-- 팀장일때만 보이게 처리 (jsp) -->
         <div id="memberListParent">
-            
-            
         </div>
 
         <img src="../../img/x.png" id="navCloseBtn" onclick="closeNav()">
@@ -239,12 +265,34 @@ else{
         var scheduleDayList = <%= scheduleDayList %>
         var scheduleCount = <%= scheduleCountList %>
 
+
+        var sessionAnotherPerson = <%= anotherPersonId %>
+        var anotherPersonName = <%= anotherPersonName %>
+        
+        if(sessionAnotherPerson != 'null'){
+            console.log(id+sessionAnotherPerson)
+            if(id === sessionAnotherPerson){
+                console.log("같음")
+            }
+            else{
+                
+            var memberName = document.getElementById("memberName")
+            var anotherPersonNameDiv = document.createElement("div")
+            anotherPersonNameDiv.id = "memberName"
+            anotherPersonNameDiv.innerHTML = anotherPersonName
+
+            memberName.appendChild(anotherPersonNameDiv)
+            
+            var scheduleAdd = document.getElementById("modalScheduleAdd");
+            scheduleAdd.style.display = "none"
+            }
+        }
+
         console.log("현재 sessionId : "+id)
         console.log("현재 sessionName : "+name)
         console.log("현재 sessionTel : "+tel)
         console.log("현재 sessionRank : "+rank)
         console.log("현재 sessionDepartment : "+department)
-
         
         
         // 로그인 상태가 아니면 mainPage에 들어올 수 없도록 처리
@@ -336,12 +384,14 @@ else{
                 memberListParent.appendChild(departmentList)
              }
 
-            //  var memberNameParent = document.getElementById("clickName")
-            //  var memberName = document.createElement("div")
-            // //  memberName.innerHTML = clickName
+             var me = document.createElement("div")
+             me.innerHTML = "내 페이지로"
+             me.onclick = function(){
+                window.location.href = "../action/removeSessionAction.jsp?"
+             }
+             memberListParent.appendChild(me)
+            
 
-            // console.log(clickName)
-            //  memberNameParent.appendChild(memberName)
         }
 
         }

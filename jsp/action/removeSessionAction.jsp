@@ -9,19 +9,11 @@
 <%
 request.setCharacterEncoding("utf-8");
 
-String memberId = request.getParameter("id");
-String memberName = request.getParameter("name");
-
 // 팀장이 팀원 페이지를 클릭했다는 것을 알기 위해
-session.setAttribute("sessionAnotherPerson", memberId);
+session.removeAttribute("sessionAnotherPerson");
 
-session.setAttribute("sessionAnotherPersonName", memberName);
-ArrayList<String> id = new ArrayList<String>();
-    id.add("\""+memberId+"\"");
+session.removeAttribute("sessionAnotherPersonName");
 
-ArrayList<String> name = new ArrayList<String>();
-    name.add("\""+memberName+"\"");
-    
 
 %>
 
@@ -35,10 +27,7 @@ ArrayList<String> name = new ArrayList<String>();
 </head>
 <body>
     <script>
-        // var id = <%= id %>
-        // var name = <%= name %>
-        // alert("memberpage로 이동함, id는 "+id)
-        location.href = "../page/mainPage.jsp?clickName="+name;
+        location.href = "../page/mainPage.jsp?";
 
     </script>
 </body>

@@ -15,6 +15,8 @@ boolean valid = true;
 
     session.removeAttribute("sessionDate");
     session.removeAttribute("sessionIdx");
+    session.removeAttribute("sessionAnotherPerson");
+    session.removeAttribute("sessionAnotherPersonName");
 
     valid = false;
     }

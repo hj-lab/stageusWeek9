@@ -27,6 +27,8 @@ boolean valid = true;
     session.removeAttribute("sessionRank");
     session.removeAttribute("sessionDepartment");
     session.removeAttribute("sessionIdx");
+    session.removeAttribute("sessionAnotherPerson");
+    session.removeAttribute("sessionAnotherPersonName");
 
     valid = false;
 

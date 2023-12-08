@@ -10,6 +10,7 @@
 <%@ page import="java.util.Calendar" %>
 
 <%
+String sessionId = (String) session.getAttribute("sessionId");
 // 내가 클릭한 칸의 일을 가져옴
 String day = request.getParameter("myDay");
 
@@ -36,16 +37,23 @@ ArrayList<String> dayTimeList = new ArrayList<String>();
 ArrayList<String> dayContentList = new ArrayList<String>();
 ArrayList<Integer> idxList = new ArrayList<Integer>();
 
+// 팀장이 팀원을 클릭했을 경우 그 팀원의 id 가져옴
+String sessionAnotherPerson = (String) session.getAttribute("sessionAnotherPerson");
+ArrayList<String> personid = new ArrayList<String>();
+personid.add("\""+sessionAnotherPerson+"\"");
+
 try{
 // 년, 월, 일 추출
 int myYear = cal.get(Calendar.YEAR);
 int myMonth = cal.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줌
 int myDay = cal.get(Calendar.DAY_OF_MONTH);
 
-
 Class.forName("com.mysql.jdbc.Driver");
 Connection connect = DriverManager.getConnection("jdbc:mysql://localhost/scheduler","heeju","1234");
 
+
+// 내꺼보는 페이지라면
+if(sessionAnotherPerson == null){
 String sql = "SELECT idx, name, date, content FROM schedule WHERE YEAR(date) = ? AND MONTH(date) = ? AND DAY(date) = ? AND account_idx = ?";
 PreparedStatement query = connect.prepareStatement(sql);
 
@@ -55,13 +63,31 @@ query.setInt(3, myDay);
 query.setInt(4, accountIdx);
 
 ResultSet result = query.executeQuery();
-
-while(result.next()){
-    idxList.add(result.getInt(1));
-    dayNameList.add("\""+result.getString(2)+"\"");
-    dayTimeList.add("\""+result.getString(3)+"\"");
-    dayContentList.add("\""+result.getString(4)+"\"");
+    
+    while(result.next()){
+        idxList.add(result.getInt(1));
+        dayNameList.add("\""+result.getString(2)+"\"");
+        dayTimeList.add("\""+result.getString(3)+"\"");
+        dayContentList.add("\""+result.getString(4)+"\"");
+    }
 }
+else{
+    String sql = "SELECT s.idx, s.name, s.date, s.content FROM schedule s JOIN account a ON s.account_idx = a.idx WHERE a.id = ? ";
+    PreparedStatement query = connect.prepareStatement(sql);
+
+    query.setString(1, sessionAnotherPerson);
+
+    ResultSet result = query.executeQuery();
+        
+        while(result.next()){
+            idxList.add(result.getInt(1));
+            dayNameList.add("\""+result.getString(2)+"\"");
+            dayTimeList.add("\""+result.getString(3)+"\"");
+            dayContentList.add("\""+result.getString(4)+"\"");
+        }
+}
+
+
 
 }catch(Exception e){
     e.printStackTrace(); 
@@ -82,6 +108,8 @@ while(result.next()){
         var dayTimeList = <%= dayTimeList %>
         var dayContentList = <%= dayContentList %>
         var idxList = <%= idxList %>
+        // 팀장이 팀원을 클릭한 경우의 id
+        var personid = <%= personid %>
 
         var scheduleList = window.opener.document.getElementById("scheduleList")
 
@@ -129,6 +157,9 @@ while(result.next()){
                 content.id = idxList[i]
                 content.classList.add("contentClass")
 
+                dayContentParent.appendChild(content)
+
+                if (personid == null){
                 // 수정버튼
                 var modifyBtn = document.createElement("input")
                 modifyBtn.setAttribute("type", "button")
@@ -147,10 +178,13 @@ while(result.next()){
                 deleteBtn.style.height = "20px"
                 deleteBtn.classList.add('deleteBtnClass')
                 console.log(deleteBtn)
-
-                dayContentParent.appendChild(content)
+                
                 dayContentParent.appendChild(modifyBtn)
                 dayContentParent.appendChild(deleteBtn)
+                }
+
+                
+                
                 
                 // 시간 넣을 div
                 var timeInput = document.createElement("input")
